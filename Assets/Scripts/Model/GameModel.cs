@@ -10,9 +10,15 @@ public class GameModel {
 
     private IList observers = new List<ModelListener>();
 
+    public GameModel() {
+        // Connect to server.
+
+    }
+
     public void IncToiletPaper() {
 
         toiletPapers++;
+        SendPaperPacket();
 
         if (toiletPapers >= MAX_PAPER_BOX) {
 
@@ -20,6 +26,11 @@ public class GameModel {
             InformObserversBoxFull();
         }
 
+
+    }
+
+    private void SendPaperPacket() {
+        // Send paper packet to server.
 
     }
 
