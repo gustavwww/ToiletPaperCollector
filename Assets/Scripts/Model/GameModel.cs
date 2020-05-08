@@ -6,7 +6,7 @@ public class GameModel {
 
 
     private int toiletPapers = 0;
-    private static readonly int MAX_PAPER_BOX = 50;
+    private static readonly int MAX_PAPER_BOX = 40;
 
     private IList observers = new List<ModelListener>();
 

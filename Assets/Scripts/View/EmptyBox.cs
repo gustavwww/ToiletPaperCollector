@@ -5,6 +5,7 @@ using UnityEngine;
 public class EmptyBox : MonoBehaviour
 {
 
+    private static readonly float INIT_DELAY = 1.0f;
     private static readonly float MOVE_TIME = 1.8f;
     private static readonly float MOVE_SPEED = 4;
 
@@ -41,7 +42,9 @@ public class EmptyBox : MonoBehaviour
 
             timer += Time.fixedDeltaTime;
 
-            if (timer <= MOVE_TIME) {
+            if (timer < INIT_DELAY) { return; }
+
+            if (timer <= MOVE_TIME + INIT_DELAY) {
                 
                 rigidBody.MovePosition(transform.position + (new Vector3(1f, 0, -0.7f) * MOVE_SPEED * Time.fixedDeltaTime));
             } else {
