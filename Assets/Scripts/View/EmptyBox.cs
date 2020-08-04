@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmptyBox : MonoBehaviour
-{
+public class EmptyBox : MonoBehaviour {
 
     private static readonly float INIT_DELAY = 1.0f;
     private static readonly float MOVE_TIME = 1.8f;
@@ -20,8 +19,7 @@ public class EmptyBox : MonoBehaviour
         anim = GetComponent<Animation>();
     }
 
-
-    public void Empty() {
+    public void empty() {
 
         if (isMoving) {
             return;
@@ -29,11 +27,6 @@ public class EmptyBox : MonoBehaviour
 
         timer = 0;
         isMoving = true;
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 
     private void FixedUpdate() {

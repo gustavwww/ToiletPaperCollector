@@ -4,47 +4,47 @@ using UnityEngine;
 
 public class GameModel {
 
-
-    private int toiletPapers = 0;
     private static readonly int MAX_PAPER_BOX = 40;
 
-    private IList observers = new List<ModelListener>();
+    private int toiletPapers = 0;
+    private int toiletPaperBoxes = 0;
 
     public GameModel() {
-        // Connect to server.
 
     }
 
-    public void IncToiletPaper() {
+    public void incToiletPaper() {
 
         toiletPapers++;
-        SendPaperPacket();
 
         if (toiletPapers >= MAX_PAPER_BOX) {
 
             toiletPapers = 0;
-            InformObserversBoxFull();
+            toiletPaperBoxes++;
+            informObserversBoxFull();
         }
 
 
     }
 
-    private void SendPaperPacket() {
-        // Send paper packet to server.
+    private IList observers = new List<ModelListener>();
 
-    }
-
-    public void AddObserver(ModelListener listener) {
+    public void addObserver(ModelListener listener) {
 
         observers.Add(listener);
     }
 
-    private void InformObserversBoxFull() {
+    private void informObserversBoxFull() {
 
         foreach(ModelListener observer in observers) {
 
-            observer.BoxFullOfPaper();
+            observer.boxFullOfPaper();
         }
 
     }
+
+    public int getBoxes() {
+        return toiletPaperBoxes;
+    }
+
 }

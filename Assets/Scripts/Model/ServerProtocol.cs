@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ModelListener
-{   
-    void boxFullOfPaper();
+public class ServerProtocol : MonoBehaviour {
+
+
+
+
 }

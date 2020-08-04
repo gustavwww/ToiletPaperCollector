@@ -1,42 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class GameController : MonoBehaviour, ModelListener
-{
-    // Start is called before the first frame update
+public class GameController : MonoBehaviour, ModelListener {
 
-    public GameObject SpawnObject;
-    public GameObject RigidPaper;
+    public GameObject spawnObject;
+    public GameObject rigidPaper;
     public GameObject box;
 
+    private GameModel gameModel;
     private EmptyBox emptyBoxManager;
 
-    private GameModel gameModel;
-
-    void Start()
-    {
+    void Start() {
         gameModel = new GameModel();
-        gameModel.AddObserver(this);
+        gameModel.addObserver(this);
 
 
         emptyBoxManager = box.GetComponent<EmptyBox>();
     }
 
-    public void BoxFullOfPaper() {
+    public void boxFullOfPaper() {
 
         // Empty Box
-        emptyBoxManager.Empty();
+        emptyBoxManager.empty();
     }
 
-    public void SpawnButtonPressed()
-    {
+    public void spawnButtonPressed() {
         if (!emptyBoxManager.CanTakePaper()) {
             return;
         }
 
-        gameModel.IncToiletPaper();
-        GameObject paper = Instantiate(RigidPaper, getRandomSpawnPos(box), SpawnObject.transform.rotation, SpawnObject.transform);
+        gameModel.incToiletPaper();
+        GameObject paper = Instantiate(rigidPaper, getRandomSpawnPos(box), spawnObject.transform.rotation, spawnObject.transform);
 
         // Add rotation
         Rigidbody rgBody = paper.GetComponent<Rigidbody>();
@@ -58,14 +54,4 @@ public class GameController : MonoBehaviour, ModelListener
         return origin + randomRange;
     }
 
-
-    void Update()
-    {
-
-        if (Input.GetKeyDown("space"))
-        {
-            SpawnButtonPressed();
-        }
-        
-    }
 }
