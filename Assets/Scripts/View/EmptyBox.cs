@@ -39,7 +39,7 @@ public class EmptyBox : MonoBehaviour {
 
             if (timer <= MOVE_TIME + INIT_DELAY) {
                 
-                rigidBody.MovePosition(transform.position + (new Vector3(1f, 0, -0.7f) * MOVE_SPEED * Time.fixedDeltaTime));
+                rigidBody.MovePosition(transform.position + (new Vector3(1f, 0, -0.7f) * (MOVE_SPEED * Time.fixedDeltaTime)));
             } else {
                 // Empty completed, get box back...
 
@@ -53,7 +53,7 @@ public class EmptyBox : MonoBehaviour {
     }
 
 
-    public bool CanTakePaper() {
+    public bool canTakePaper() {
         return !isMoving;
     }
 

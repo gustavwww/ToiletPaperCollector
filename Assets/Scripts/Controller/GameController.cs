@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour, ModelListener {
     }
 
     public void spawnButtonPressed() {
-        if (!emptyBoxManager.CanTakePaper()) {
+        if (!emptyBoxManager.canTakePaper()) {
             return;
         }
 
@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour, ModelListener {
         // Add rotation
         Rigidbody rgBody = paper.GetComponent<Rigidbody>();
         rgBody.AddTorque(new Vector3(10000f, 10000f, 1000000f));
-    } 
+    }
 
     
     private Vector3 getRandomSpawnPos(GameObject box)

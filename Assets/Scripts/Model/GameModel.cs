@@ -17,11 +17,6 @@ public class GameModel : ServerListener {
         server.addObserver(this);
     }
 
-    public void Start() {
-
-        server.connect();
-    }
-
     public void incToiletPaper() {
 
         toiletPapers++;
