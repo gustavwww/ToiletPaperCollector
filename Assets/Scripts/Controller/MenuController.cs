@@ -6,7 +6,7 @@ using UnityEngine;
 public enum Navigation {
     MENU, GAME
 }
-public class MenuController : MonoBehaviour {
+public class MenuController : MonoBehaviour, MenuCameraListener {
 
     public Camera gameCamera;
     public Camera menuCamera;
@@ -14,28 +14,22 @@ public class MenuController : MonoBehaviour {
     public Canvas menuCanvas;
     public Canvas gameCanvas;
 
-    private Navigation userNavigation = Navigation.MENU;
+    private MenuCameraScript menuCameraScript;
+    
+    private Navigation currentNavigation = Navigation.MENU;
 
+    private void Start() {
+        this.menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
+        menuCameraScript.addObserver(this);
+        
+        gameCamera.gameObject.SetActive(false);
+        enableMenu();
+    }
+    
     public void playPressed() {
-        
-        
+        currentNavigation = Navigation.GAME;
+        menuCameraScript.moveCamera(Navigation.GAME);
         disableMenu();
-        userNavigation = Navigation.GAME;
-
-    }
-
-    private void disableMenu() {
-        gameCanvas.gameObject.SetActive(true);
-        menuCanvas.gameObject.SetActive(false);
-
-        menuCamera.GetComponent<Animator>().enabled = false;
-    }
-
-    private void enableMenu() {
-        gameCanvas.gameObject.SetActive(false);
-        menuCanvas.gameObject.SetActive(true);
-
-        menuCamera.GetComponent<Animator>().enabled = true;
     }
 
     public void storePressed() {
@@ -49,32 +43,25 @@ public class MenuController : MonoBehaviour {
 
     }
 
+    public void cameraReached(Navigation nav) {
+        Debug.Log("Camera Reached");
+        switch (nav) {
+            
+            case Navigation.GAME:
+                menuCamera.gameObject.SetActive(false);
+                gameCamera.gameObject.SetActive(true);
+                break;
 
-    // Start is called before the first frame update
-    private void Start() {
-        gameCamera.gameObject.SetActive(false);
-        enableMenu();
-    }
-    
-    private void updateCameraToGame() {
-        // TODO
-        menuCamera.transform.position = Vector3.Lerp(menuCamera.transform.position, gameCamera.transform.position, (9 * Time.fixedDeltaTime));
-        menuCamera.transform.rotation = Quaternion.Lerp(menuCamera.transform.rotation,
-                                    gameCamera.transform.rotation, (9 * Time.fixedDeltaTime));
-
-
-    }
-    
-    // Update is called once per frame
-    private void Update() {
+        }
         
-        switch (userNavigation) {
-                    
-                    case Navigation.GAME:
-                        updateCameraToGame();
-                        break;
-                    
-                }
     }
     
+    private void enableMenu() {
+        menuCanvas.gameObject.SetActive(true);
+    }
+    
+    private void disableMenu() {
+        menuCanvas.gameObject.SetActive(false);
+    }
+
 }

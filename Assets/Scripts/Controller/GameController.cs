@@ -40,8 +40,7 @@ public class GameController : MonoBehaviour, ModelListener {
     }
 
     
-    private Vector3 getRandomSpawnPos(GameObject box)
-    {
+    private Vector3 getRandomSpawnPos(GameObject box) {
 
         Renderer boxRender = box.GetComponent<Renderer>();
 
@@ -49,7 +48,7 @@ public class GameController : MonoBehaviour, ModelListener {
         float rangeX = boxRender.bounds.size.x / 4;
         float rangeZ = boxRender.bounds.size.z / 4;
 
-        Vector3 randomRange = new Vector3(Random.Range(-rangeX, rangeX), 4, Random.Range(-rangeZ, rangeZ));
+        Vector3 randomRange = new Vector3(Random.Range(-rangeX, rangeX), 6, Random.Range(-rangeZ, rangeZ));
 
         return origin + randomRange;
     }
