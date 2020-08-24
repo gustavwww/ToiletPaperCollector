@@ -1,85 +1,60 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using Utilities;
 
-public class GameModel : ServerListener {
+namespace Model {
+    
+    public class GameModel {
 
-    private static readonly int MAX_PAPER_BOX = 40;
+        private static readonly int MAX_PAPER_BOX = 40;
 
-    private readonly ServerManager server;
+        private readonly ServerManager server;
 
-    private int toiletPapers = 0;
-    private int toiletPaperBoxes = 0;
+        private int toiletPapers = 0;
+        private int toiletPaperBoxes = 0;
 
-    public GameModel() {
-        server = new ServerManager();
-        server.addObserver(this);
-    }
-
-    public void incToiletPaper() {
-
-        toiletPapers++;
-
-        if (toiletPapers >= MAX_PAPER_BOX) {
-
-            toiletPapers = 0;
-            toiletPaperBoxes++;
-            informObserversBoxFull();
-            sendCountPacket();
+        public GameModel() {
+            server = ServerManager.getInstance();
         }
 
-    }
+        public void incToiletPaper() {
 
-    private void sendCountPacket() {
-        server.sendMessage(ServerProtocol.writeCount());
-    }
+            toiletPapers++;
 
+            if (toiletPapers >= MAX_PAPER_BOX) {
 
-
-    public int getBoxes() {
-        return toiletPaperBoxes;
-    }
-
-    public void commandReceived(ServerCommand cmd) {
-
-        switch (cmd) {
-
-            case ServerCommand.GET_ID:
-                server.sendMessage(ServerProtocol.writeId(SystemInfo.deviceUniqueIdentifier));
-                break;
-
-            case ServerCommand.GET_NICKNAME:
-                server.sendMessage(ServerProtocol.writeNick("SOME NICK"));
-                break;
+                toiletPapers = 0;
+                toiletPaperBoxes++;
+                informObserversBoxFull();
+                sendCountPacket();
+            }
 
         }
 
-    }
-
-    public void exceptionOccurred(Exception e) {
-
-        if (e.GetType() == typeof(ServerException)) {
-            // Server Error
-            // TODO: Enum for ServerErrors
+        private void sendCountPacket() {
+            server.sendMessage(ServerProtocol.writeCount());
         }
 
 
-    }
 
-    // Observers ------------------
-    private IList<ModelListener> observers = new List<ModelListener>();
-    public void addObserver(ModelListener listener) {
-        observers.Add(listener);
-    }
+        public int getBoxes() {
+            return toiletPaperBoxes;
+        }
 
-    private void informObserversBoxFull() {
+        // Observers ------------------
+        private IList<ModelListener> observers = new List<ModelListener>();
+        public void addObserver(ModelListener listener) {
+            observers.Add(listener);
+        }
 
-        foreach (ModelListener observer in observers) {
+        private void informObserversBoxFull() {
 
-            observer.boxFullOfPaper();
+            foreach (ModelListener observer in observers) {
+
+                observer.boxFullOfPaper();
+            }
+
         }
 
     }
-
+    
 }

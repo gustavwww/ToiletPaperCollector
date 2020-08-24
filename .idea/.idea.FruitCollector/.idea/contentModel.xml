@@ -11,6 +11,17 @@
             <e p="Readme.txt" t="Include" />
           </e>
         </e>
+        <e p="loadingBar" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Loading.cs" t="Include" />
+            <e p="loadingbar.cs" t="Include" />
+            <e p="loadingcolorful.cs" t="Include" />
+            <e p="loadingtext.cs" t="Include" />
+            <e p="rotatetotate.cs" t="Include" />
+            <e p="SimpleLoading.cs" t="Include" />
+            <e p="simplerotate.cs" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Controller" t="Include">
             <e p="GameController.cs" t="Include" />
@@ -21,10 +32,12 @@
             <e p="ModelListener.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
+            <e p="ServerCommand.cs" t="Include" />
             <e p="ServerException.cs" t="Include" />
             <e p="ServerListener.cs" t="Include" />
             <e p="ServerManager.cs" t="Include" />
             <e p="ServerProtocol.cs" t="Include" />
+            <e p="UnityMainThread.cs" t="Include" />
           </e>
           <e p="View" t="Include">
             <e p="DestroyBox.cs" t="Include" />

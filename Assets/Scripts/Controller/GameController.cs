@@ -1,56 +1,62 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Model;
 using TMPro;
 using UnityEngine;
 
-public class GameController : MonoBehaviour, ModelListener {
+namespace Controller {
+    
+    public class GameController : MonoBehaviour, ModelListener {
 
-    public GameObject spawnObject;
-    public GameObject rigidPaper;
-    public GameObject box;
+        public GameObject spawnObject;
+        public GameObject rigidPaper;
+        public GameObject box;
+        
+        public TMP_Text gamePaperLabel;
 
-    private GameModel gameModel;
-    private EmptyBox emptyBoxManager;
+        private GameModel gameModel;
+        private EmptyBox emptyBoxManager;
 
-    void Start() {
-        gameModel = new GameModel();
-        gameModel.addObserver(this);
-
-
-        emptyBoxManager = box.GetComponent<EmptyBox>();
-    }
-
-    public void boxFullOfPaper() {
-
-        // Empty Box
-        emptyBoxManager.empty();
-    }
-
-    public void spawnButtonPressed() {
-        if (!emptyBoxManager.canTakePaper()) {
-            return;
+        void Start() {
+            gameModel = new GameModel();
+            gameModel.addObserver(this);
+        
+            emptyBoxManager = box.GetComponent<EmptyBox>();
         }
 
-        gameModel.incToiletPaper();
-        GameObject paper = Instantiate(rigidPaper, getRandomSpawnPos(box), spawnObject.transform.rotation, spawnObject.transform);
+        public void boxFullOfPaper() {
 
-        // Add rotation
-        Rigidbody rgBody = paper.GetComponent<Rigidbody>();
-        rgBody.AddTorque(new Vector3(10000f, 10000f, 1000000f));
-    }
+            // Empty Box
+            emptyBoxManager.empty();
+        }
+
+        public void spawnButtonPressed() {
+            if (!emptyBoxManager.canTakePaper()) {
+                return;
+            }
+
+            gameModel.incToiletPaper();
+            GameObject paper = Instantiate(rigidPaper, getRandomSpawnPos(box), spawnObject.transform.rotation, spawnObject.transform);
+
+            // Add rotation
+            Rigidbody rgBody = paper.GetComponent<Rigidbody>();
+            rgBody.AddTorque(new Vector3(10000f, 10000f, 1000000f));
+
+            gamePaperLabel.text = gameModel.getBoxes().ToString();
+        }
 
     
-    private Vector3 getRandomSpawnPos(GameObject box) {
+        private Vector3 getRandomSpawnPos(GameObject box) {
 
-        Renderer boxRender = box.GetComponent<Renderer>();
+            Renderer boxRender = box.GetComponent<Renderer>();
 
-        Vector3 origin = box.transform.position;
-        float rangeX = boxRender.bounds.size.x / 4;
-        float rangeZ = boxRender.bounds.size.z / 4;
+            Vector3 origin = box.transform.position;
+            float rangeX = boxRender.bounds.size.x / 4;
+            float rangeZ = boxRender.bounds.size.z / 4;
 
-        Vector3 randomRange = new Vector3(Random.Range(-rangeX, rangeX), 6, Random.Range(-rangeZ, rangeZ));
+            Vector3 randomRange = new Vector3(Random.Range(-rangeX, rangeX), 6, Random.Range(-rangeZ, rangeZ));
 
-        return origin + randomRange;
+            return origin + randomRange;
+        }
+
     }
-
+    
 }

@@ -20,14 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c108aad8-7e1d-4da9-a5b1-2a408f77ca64" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/UnityMainThread.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/UnityMainThread.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/GameModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/GameModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/ModelListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/ModelListener.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerListener.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerProtocol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerProtocol.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +52,17 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/View/EmptyBox.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/GameModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/ModelListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerCommand.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/UnityMainThread.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerProtocol.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerManager.cs" />
       </list>
     </option>
   </component>
@@ -54,9 +72,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="CodeLensConfigurable" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -88,6 +107,7 @@
       <updated>1597442197822</updated>
       <workItem from="1597442214429" duration="11228000" />
       <workItem from="1598108735800" duration="7756000" />
+      <workItem from="1598212261010" duration="16437000" />
     </task>
     <servers />
   </component>
@@ -106,14 +126,23 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="438" y="162" key="SettingsEditor" timestamp="1597442939120">
+    <state x="769" y="221" key="RiderGenerateDialog" timestamp="1598213511189">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="438" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597442939120" />
+    <state x="769" y="221" key="RiderGenerateDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598213511189" />
+    <state x="825" y="267" key="SettingsEditor" timestamp="1598214072540">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="825" y="267" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1598214072540" />
+    <state x="623" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1598218932408">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1598218932408" />
   </component>
 </project>

@@ -1,59 +1,80 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public enum ServerCommand {
-    GET_ID,
-    GET_NICKNAME,
-    INVALID
-}
+namespace Utilities {
+    
+    public static class ServerProtocol {
 
-public static class ServerProtocol {
+        public static ServerCommand processMessage(string msg) {
+            Debug.Log("Processing message: " + msg);
+            
+            if (responseLogged(msg)) {
+                return new ServerCommand(msg, ServerCommandType.RESPONSE_LOGGED);
+            }
 
-    public static ServerCommand processMessage(string msg) {
+            if (responseAmount(msg)) {
+                return new ServerCommand(msg, ServerCommandType.RESPONSE_AMOUNT);
+            }
+        
+            if (wantId(msg)) {
+                return new ServerCommand(msg, ServerCommandType.GET_ID);
+            }
 
-        if (wantId(msg)) {
-            return ServerCommand.GET_ID;
+            if (wantNick(msg)) {
+                return new ServerCommand(msg, ServerCommandType.GET_NICKNAME);
+            }
+
+            if (getError(msg) != null) {
+                throw new ServerException(getError(msg));
+            }
+
+            return new ServerCommand(msg, ServerCommandType.INVALID);
         }
 
-        if (wantNick(msg)) {
-            return ServerCommand.GET_NICKNAME;
+        public static string writeCount() {
+            return "count";
         }
 
-        if (getError(msg) != null) {
-            throw new ServerException(getError(msg));
+        public static string writeNick(string nickname) {
+            return "nickname:" + nickname.Trim();
         }
 
-        return ServerCommand.INVALID;
-    }
-
-    public static string writeCount() {
-        return "count";
-    }
-
-    public static string writeNick(string nickname) {
-        return "nick:" + nickname.Trim();
-    }
-
-    public static string writeId(string id) {
-        return "id:" + id.Trim();
-    }
-
-    private static string getError(string msg) {
-
-        if (msg.StartsWith("error:")) {
-
-            return msg.Substring(6);
+        public static string writeId(string id) {
+            return "id:" + id.Trim();
         }
-        return null;
-    }
 
-    private static bool wantId(string msg) {
-        return msg.Equals("want:id");
-    }
+        public static string wantAmount() {
+            return "want:amount";
+        }
 
-    private static bool wantNick(string msg) {
-        return msg.Equals("want:nickname");
-    }
+        public static int parseAmount(string msg) {
+            return int.Parse(msg.Substring(7));
+        }
+    
+        private static string getError(string msg) {
 
+            if (msg.StartsWith("error:")) {
+
+                return msg.Substring(6);
+            }
+            return null;
+        }
+
+        private static bool wantId(string msg) {
+            return msg.Equals("want:id");
+        }
+
+        private static bool wantNick(string msg) {
+            return msg.Equals("want:nickname");
+        }
+
+        private static bool responseLogged(string msg) {
+            return msg.Equals("logged");
+        }
+
+        private static bool responseAmount(string msg) {
+            return msg.StartsWith("amount:");
+        }
+
+    }
+    
 }

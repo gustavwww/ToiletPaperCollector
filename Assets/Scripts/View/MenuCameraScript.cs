@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Controller;
 using UnityEngine;
 
 public class MenuCameraScript : MonoBehaviour {
@@ -37,8 +38,7 @@ public class MenuCameraScript : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(transform.rotation, gameCamera.transform.rotation, (Time.deltaTime * 3));
             yield return null;
         }
-
-        Debug.Log("Done transforming...");
+        
         informCameraReached(Navigation.GAME);
     }
     
