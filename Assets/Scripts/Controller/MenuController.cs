@@ -181,6 +181,8 @@ namespace Controller {
 
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
+            UnityMainThread.instance.addJob(turnOffIndicators);
+            
             if (e.GetType() == typeof(ServerException)) {
                 UnityMainThread.instance.addJob(() => {
                     nickError.text = e.Message;
