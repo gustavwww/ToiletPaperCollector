@@ -7,10 +7,11 @@ using UnityEngine.UI;
 using Utilities;
 
 namespace Controller {
+    
     public enum Navigation {
         MENU, GAME
     }
-
+    
     public class MenuController : MonoBehaviour, MenuCameraListener, ServerListener {
 
         // Cameras
@@ -23,6 +24,8 @@ namespace Controller {
         public Canvas menuCanvas;
         public GameObject menuPanel;
         public GameObject menuIndicator;
+        public Text menuError;
+        
         public GameObject nickPanel;
         public GameObject nickIndicator;
         public TMP_InputField nickInput;
@@ -39,6 +42,8 @@ namespace Controller {
         private string clientId;
         
         private void Start() {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            
             clientId = SystemInfo.deviceUniqueIdentifier;
             
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
@@ -57,6 +62,7 @@ namespace Controller {
     
         // Actions ------------------
         public void playPressed() {
+            hideErrors();
             turnOnIndicator(menuIndicator);
         
             server.connect();
@@ -74,6 +80,7 @@ namespace Controller {
         }
 
         public void enterNickPressed() {
+            hideErrors();
             turnOnIndicator(nickIndicator);
             string nickname = nickInput.text;
         
@@ -91,6 +98,7 @@ namespace Controller {
             switch (nav) {
                 case Navigation.GAME:
                     setGameCameraActive();
+                    showGameCanvas();
                     break;
 
             }
@@ -111,26 +119,37 @@ namespace Controller {
     
         // Menu Handling -------------------
 
-        private void hideMenu() {
+        private void hideMenuCanvas() {
             menuCanvas.gameObject.SetActive(false);
         }
-        
+
         private void resetMenu() {
+            gameCanvas.gameObject.SetActive(false);
             menuCanvas.gameObject.SetActive(true);
             menuPanel.SetActive(true);
             nickPanel.SetActive(false);
+            hideErrors();
             turnOffIndicators();
         }
 
         private void showNickMenu() {
             menuPanel.SetActive(false);
             nickPanel.SetActive(true);
-            showNickError(false);
+            hideErrors();
             turnOffIndicators();
         }
 
         private void showNickError(bool show) {
             nickError.gameObject.SetActive(show);
+        }
+
+        private void showMenuError(bool show) {
+            menuError.gameObject.SetActive(show);
+        }
+
+        private void hideErrors() {
+            showNickError(false);
+            showMenuError(false);
         }
 
         private void turnOffIndicators() {
@@ -142,6 +161,10 @@ namespace Controller {
         private void turnOnIndicator(GameObject indicator) {
             indicator.SetActive(true);
             menuCanvas.GetComponent<CanvasGroup>().interactable = false;
+        }
+
+        private void showGameCanvas() {
+            gameCanvas.gameObject.SetActive(true);
         }
 
         // --------------------------
@@ -167,7 +190,7 @@ namespace Controller {
                     UnityMainThread.instance.addJob(() => {
                         menuCameraScript.moveCamera(Navigation.GAME);
                         resetMenu();
-                        hideMenu();
+                        hideMenuCanvas();
                     });
                     break;
 
@@ -179,16 +202,20 @@ namespace Controller {
             }
         }
 
+        // TODO: Code cleanup & Error handling
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
-            UnityMainThread.instance.addJob(turnOffIndicators);
+            UnityMainThread.instance.addJob(() => {
+                turnOffIndicators();
+                showMenuError(true);
+                showNickError(true);
+            });
             
-            if (e.GetType() == typeof(ServerException)) {
+            if (e is ServerException) {
                 UnityMainThread.instance.addJob(() => {
-                    nickError.text = e.Message;
                     showNickError(true);
+                    showMenuError(true);
                 });
-                
             }
         }
 

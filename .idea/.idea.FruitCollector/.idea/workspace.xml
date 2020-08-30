@@ -22,7 +22,9 @@
     <list default="true" id="c108aad8-7e1d-4da9-a5b1-2a408f77ca64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FruitCollector/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/View/EmptyBox.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/View/MenuCameraScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerListener.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Model/GameModel.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Model/ModelListener.cs" />
@@ -47,6 +48,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerProtocol.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Controller/GameController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ServerException.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Controller/MenuController.cs" />
       </list>
     </option>
@@ -94,6 +96,7 @@
       <workItem from="1598108735800" duration="7756000" />
       <workItem from="1598212261010" duration="16437000" />
       <workItem from="1598361420321" duration="1085000" />
+      <workItem from="1598740421104" duration="4626000" />
     </task>
     <servers />
   </component>
