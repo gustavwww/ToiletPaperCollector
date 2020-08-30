@@ -68,13 +68,13 @@ namespace Controller {
             server.connect();
         }
 
-        public void storePressed() {
+        public void leaderBoardPressed() {
         
         
 
         }
 
-        public void aboutPressed() {
+        public void storePressed() {
 
 
         }
