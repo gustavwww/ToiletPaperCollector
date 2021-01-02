@@ -12,7 +12,7 @@ namespace Controller {
         MENU, GAME
     }
     
-    public class MenuController : MonoBehaviour, MenuCameraListener, ServerListener {
+    public class MenuController : MonoBehaviour, MenuCameraListener {
 
         // Cameras
         public Camera gameCamera;

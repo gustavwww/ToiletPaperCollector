@@ -22,7 +22,7 @@ namespace Controller {
             emptyBoxManager = box.GetComponent<EmptyBox>();
         }
 
-        public void boxFullOfPaper() {
+        public void boxFull() {
 
             // Empty Box
             emptyBoxManager.empty();

@@ -7,7 +7,8 @@ namespace Services {
     internal class UnityMainThread : MonoBehaviour {
         
         internal static UnityMainThread instance;
-        Queue<Action> jobs = new Queue<Action>();
+        
+        private readonly Queue<Action> jobs = new Queue<Action>();
 
         void Awake() {
             instance = this;

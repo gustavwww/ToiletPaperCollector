@@ -7,13 +7,10 @@ namespace Model {
 
         private static readonly int MAX_PAPER_BOX = 40;
 
-        private readonly ServerManager server;
-
         private int toiletPapers = 0;
         private int toiletPaperBoxes = 0;
 
         public GameModel() {
-            server = ServerManager.getInstance();
         }
 
         public void incToiletPaper() {
@@ -25,13 +22,8 @@ namespace Model {
                 toiletPapers = 0;
                 toiletPaperBoxes++;
                 informObserversBoxFull();
-                sendCountPacket();
             }
 
-        }
-
-        private void sendCountPacket() {
-            server.sendMessage(ServerProtocol.writeCount());
         }
 
 
@@ -40,7 +32,7 @@ namespace Model {
             return toiletPaperBoxes;
         }
 
-        // Observers ------------------
+        // Observers -----------------------------------------------
         private IList<ModelListener> observers = new List<ModelListener>();
         public void addObserver(ModelListener listener) {
             observers.Add(listener);
@@ -50,7 +42,7 @@ namespace Model {
 
             foreach (ModelListener observer in observers) {
 
-                observer.boxFullOfPaper();
+                observer.boxFull();
             }
 
         }

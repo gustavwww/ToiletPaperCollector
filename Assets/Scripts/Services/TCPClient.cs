@@ -7,41 +7,36 @@ using UnityEngine;
 
 namespace Services {
 	
-	public class ServerManager {
+	public class TCPClient {
 
-		private static readonly string HOST = "localhost";
-		private static readonly int PORT = 26000;
+		private readonly string host;
+		private readonly int port;
 
 		private TcpClient socket;
 		private Thread readThread;
 
 		private bool isListening = false;
 		
-		private IList<ServerListener> observers = new List<ServerListener>();
+		private readonly IList<TCPListener> listeners = new List<TCPListener>();
 
-		private ServerManager() {}
-
-		private static ServerManager instance = null;
-		public static ServerManager getInstance() {
-			if (instance != null) {
-				return instance;
-			}
-			return new ServerManager();
+		public TCPClient(string host, int port) {
+			this.host = host;
+			this.port = port;
 		}
-	
-		public void addObserver(ServerListener listener) {
-			observers.Add(listener);
+		
+		public void addListener(TCPListener listener) {
+			listeners.Add(listener);
 		}
 
-		private void informObserversNewMessage(ServerCommand cmd) {
-			foreach (ServerListener observer in observers) {
-				observer.commandReceived(cmd);
+		private void informObserversNewMessage(string msg) {
+			foreach (TCPListener listener in listeners) {
+				listener.messageReceived(msg);
 			}
 		}
 
 		private void informObserversException(Exception e) {
-			foreach (ServerListener observer in observers) {
-				observer.exceptionOccurred(e);
+			foreach (TCPListener listener in listeners) {
+				listener.exceptionOccurred(e);
 			}
 		}
 
@@ -62,22 +57,21 @@ namespace Services {
 			
 			try {
 
-				while (true) {
-					if (!isListening) { break; }
-					
-					socket = new TcpClient(HOST, PORT);
+				while (isListening) {
+
+					socket = new TcpClient(host, port);
 					Byte[] bytes = new Byte[1024];
 
 					using (NetworkStream stream = socket.GetStream()) {
 
 						int length;
 						while ((length = stream.Read(bytes, 0, bytes.Length)) != 0) {
-							if (!isListening) { break;}
-							var incommingData = new byte[length];
-							Array.Copy(bytes, 0, incommingData, 0, length);
+							
+							byte[] incomingData = new byte[length];
+							Array.Copy(bytes, 0, incomingData, 0, length);
 					 						
-							string serverMessage = Encoding.ASCII.GetString(incommingData).Trim();
-							informObserversNewMessage(ServerProtocol.processMessage(serverMessage));
+							string serverMessage = Encoding.ASCII.GetString(incomingData).Trim();
+							informObserversNewMessage(serverMessage);
 						}
 						
 					}
@@ -91,10 +85,7 @@ namespace Services {
 
 		public void sendMessage(string message) {
 			Debug.Log("Sending: " + message);
-			
-			if (socket == null) {
-				return;
-			}
+			if (socket == null) { return; }
 
 			try {
 				NetworkStream stream = socket.GetStream();

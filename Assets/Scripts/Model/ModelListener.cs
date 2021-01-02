@@ -1,7 +1,7 @@
 ﻿namespace Model {
     
     public interface ModelListener {   
-        void boxFullOfPaper();
+        void boxFull();
     }
     
 }

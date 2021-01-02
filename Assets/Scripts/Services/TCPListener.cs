@@ -2,8 +2,8 @@
 
 namespace Services {
     
-    public interface ServerListener {
-        void commandReceived();
+    public interface TCPListener {
+        void messageReceived(string msg);
         void exceptionOccurred(Exception e);
     }
     
