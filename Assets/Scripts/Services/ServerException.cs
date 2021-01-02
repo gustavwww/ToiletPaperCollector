@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utilities {
+namespace Services {
 
     public class ServerException : Exception {
 

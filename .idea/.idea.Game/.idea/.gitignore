@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.Game.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\gusta\Documents\Project\ClickerGame\Game\.idea\.idea.Game\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

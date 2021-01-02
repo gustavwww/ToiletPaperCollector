@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-namespace Utilities {
+namespace Services {
 	
 	public class ServerManager {
 

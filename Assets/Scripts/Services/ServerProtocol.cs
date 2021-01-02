@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Utilities {
+namespace Services {
     
     public static class ServerProtocol {
 

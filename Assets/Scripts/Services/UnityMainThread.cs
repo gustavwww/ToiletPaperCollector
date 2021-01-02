@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utilities {
+namespace Services {
     
     internal class UnityMainThread : MonoBehaviour {
         

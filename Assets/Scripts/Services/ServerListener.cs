@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Utilities {
+namespace Services {
     
     public interface ServerListener {
-        void commandReceived(ServerCommand cmd);
+        void commandReceived();
         void exceptionOccurred(Exception e);
     }
     
