@@ -84,7 +84,6 @@ namespace Services {
 		}
 
 		public void sendMessage(string message) {
-			Debug.Log("Sending: " + message);
 			if (socket == null) { return; }
 
 			try {

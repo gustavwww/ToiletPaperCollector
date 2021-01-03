@@ -53,8 +53,8 @@ public class EmptyBox : MonoBehaviour {
     }
 
 
-    public bool canTakePaper() {
-        return !isMoving;
+    public bool isEmptying() {
+        return isMoving;
     }
 
 }

@@ -10,6 +10,8 @@ namespace Controller {
     
     public class MenuController : MonoBehaviour, MenuCameraListener {
 
+        public GameController gameController;
+        
         // Cameras
         public Camera gameCamera;
         public Camera menuCamera;
@@ -29,7 +31,6 @@ namespace Controller {
     
         // Game Canvas
         public Canvas gameCanvas;
-        public TMP_Text gamePaperLabel;
 
         // Client
         private string clientId;
@@ -42,6 +43,7 @@ namespace Controller {
             clientId = SystemInfo.deviceUniqueIdentifier;
 
             server = new ServerController(this);
+            gameController.setServerController(server);
             
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
             menuCameraScript.addObserver(this);
@@ -82,7 +84,21 @@ namespace Controller {
             server.login(clientId, nickname);
         }
         // --------------------------
-    
+
+        public void navigate(Navigation to) {
+            switch (to) {
+                case Navigation.MENU:
+                    resetMenu();
+                    menuCameraScript.moveCamera(Navigation.MENU);
+                    break;
+                
+                case Navigation.GAME:
+                    hideMenuCanvas();
+                    menuCameraScript.moveCamera(Navigation.GAME);
+                    break;
+                }
+            
+        }
         
         // Camera Handling ----------------
         public void cameraReached(Navigation nav) {

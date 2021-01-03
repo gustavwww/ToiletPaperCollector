@@ -13,7 +13,7 @@ namespace Services.Protocol {
             foreach (string arg in cmd.getArgs()) {
                 sb.Append(arg).Append(",");
             }
-            if (sb[sb.Length - 1] == ',') {
+            if (sb[sb.Length - 1] == ',' || sb[sb.Length - 1] == ':') {
                 sb.Remove(sb.Length - 1, 1);
             }
 

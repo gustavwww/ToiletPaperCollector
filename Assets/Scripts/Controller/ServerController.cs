@@ -20,6 +20,7 @@ namespace Controller {
         public ServerController(MenuController menuController) {
             this.menuController = menuController;
             tcpClient = new TCPClient(HOST, PORT);
+            tcpClient.addListener(this);
             protocol = ProtocolFactory.getServerProtocol();
 
             tcpClient.connect();
@@ -43,14 +44,25 @@ namespace Controller {
             
             switch (cmd.getCmd()) {
                 case "logged":
-                    Debug.Log("Logged in!");
                     UnityMainThread.instance.addJob(() => {
-                        menuController.turnOffIndicators();
+                        menuController.navigate(Navigation.GAME);
                     });
                     break;
-                
+
                 case "error":
-                    Debug.Log("Error occurred! " + cmd.getArgs());
+                    
+                    if (cmd.getArgs()[0].StartsWith("usercouldnotbefound")) {
+                        UnityMainThread.instance.addJob(() => {
+                            menuController.turnOffIndicators();
+                            menuController.showNickMenu();
+                        });
+                    } else {
+                        UnityMainThread.instance.addJob(() => {
+                            menuController.turnOffIndicators();
+                            menuController.showMenuError(true);
+                            menuController.showNickError(true);
+                        });
+                    }
                     break;
             }
         }

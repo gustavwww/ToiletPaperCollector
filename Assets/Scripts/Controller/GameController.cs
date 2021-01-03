@@ -15,22 +15,29 @@ namespace Controller {
         private GameModel gameModel;
         private EmptyBox emptyBoxManager;
 
+        private ServerController server;
+
+        public void setServerController(ServerController server) {
+            this.server = server;
+        }
+        
         void Start() {
             gameModel = new GameModel();
             gameModel.addListener(this);
         
             emptyBoxManager = box.GetComponent<EmptyBox>();
         }
-
+        
         public void boxFull() {
+            server.sendTCP("count");
             emptyBoxManager.empty();
         }
 
         public void spawnButtonPressed() {
-            if (!emptyBoxManager.canTakePaper()) {
+            if (emptyBoxManager.isEmptying()) {
                 return;
             }
-
+            
             gameModel.incrementAmount();
             GameObject paper = Instantiate(rigidPaper, getRandomSpawnPos(box), spawnObject.transform.rotation, spawnObject.transform);
 
