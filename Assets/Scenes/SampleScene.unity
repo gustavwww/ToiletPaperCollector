@@ -1084,6 +1084,7 @@ GameObject:
   - component: {fileID: 150411192}
   - component: {fileID: 150411191}
   - component: {fileID: 150411194}
+  - component: {fileID: 150411190}
   m_Layer: 0
   m_Name: Intro Camera
   m_TagString: MainCamera
@@ -1091,6 +1092,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &150411190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150411189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff63ed08875aae4dbbe039235765497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameCamera: {fileID: 963194227}
 --- !u!81 &150411191
 AudioListener:
   m_ObjectHideFlags: 0
@@ -7727,6 +7741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9c38a6d081cfe4ca43386609e7099d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 362818771}
   gameCamera: {fileID: 963194227}
   menuCamera: {fileID: 150411192}
   menuCanvas: {fileID: 571512707}
@@ -7738,7 +7753,6 @@ MonoBehaviour:
   nickInput: {fileID: 472256214}
   nickError: {fileID: 504691401}
   gameCanvas: {fileID: 1430129832}
-  gamePaperLabel: {fileID: 348612878}
 --- !u!4 &1122570510
 Transform:
   m_ObjectHideFlags: 0
