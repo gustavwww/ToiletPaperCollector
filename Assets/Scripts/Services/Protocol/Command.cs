@@ -5,7 +5,7 @@ namespace Protocol {
         private readonly string cmd;
         private readonly string[] args;
 
-        public Command(string cmd, string[] args) {
+        public Command(string cmd, params string[] args) {
             this.cmd = cmd;
             this.args = args;
         }

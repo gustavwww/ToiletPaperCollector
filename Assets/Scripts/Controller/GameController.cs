@@ -17,14 +17,12 @@ namespace Controller {
 
         void Start() {
             gameModel = new GameModel();
-            gameModel.addObserver(this);
+            gameModel.addListener(this);
         
             emptyBoxManager = box.GetComponent<EmptyBox>();
         }
 
         public void boxFull() {
-
-            // Empty Box
             emptyBoxManager.empty();
         }
 
@@ -33,7 +31,7 @@ namespace Controller {
                 return;
             }
 
-            gameModel.incToiletPaper();
+            gameModel.incrementAmount();
             GameObject paper = Instantiate(rigidPaper, getRandomSpawnPos(box), spawnObject.transform.rotation, spawnObject.transform);
 
             // Add rotation

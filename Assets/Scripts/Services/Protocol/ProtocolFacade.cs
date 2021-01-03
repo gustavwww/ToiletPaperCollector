@@ -30,7 +30,7 @@ namespace Services.Protocol {
         public string writeMessage(Command cmd) {
             return protocolWriter.writeMessage(cmd);
         }
-        
+
     }
     
 }
