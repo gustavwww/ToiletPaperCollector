@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Model;
 using Protocol;
 using Services;
 using Services.Protocol;
@@ -13,12 +14,14 @@ namespace Controller {
         private static readonly int PORT = 26000;
 
         private readonly MenuController menuController;
+        private readonly GameController gameController;
 
         private readonly TCPClient tcpClient;
         private readonly IServerProtocol protocol;
 
-        public ServerController(MenuController menuController) {
+        public ServerController(MenuController menuController, GameController gameController) {
             this.menuController = menuController;
+            this.gameController = gameController;
             tcpClient = new TCPClient(HOST, PORT);
             tcpClient.addListener(this);
             protocol = ProtocolFactory.getServerProtocol();
@@ -44,6 +47,8 @@ namespace Controller {
             
             switch (cmd.getCmd()) {
                 case "logged":
+                    int amount = int.Parse(cmd.getArgs()[0]);
+                    gameController.setGameModel(new GameModel(amount));
                     UnityMainThread.instance.addJob(() => {
                         menuController.navigate(Navigation.GAME);
                     });

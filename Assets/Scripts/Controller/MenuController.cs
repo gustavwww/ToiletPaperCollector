@@ -29,7 +29,7 @@ namespace Controller {
             
             clientId = SystemInfo.deviceUniqueIdentifier;
 
-            server = new ServerController(this);
+            server = new ServerController(this, gameController);
             gameController.setServerController(server);
             
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();

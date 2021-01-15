@@ -10,11 +10,16 @@ namespace Controller {
         public WorldSpawner spawner;
         public EmptyBox emptyBoxManager;
         
-        private GameModel gameModel;
         private ServerController server;
+        private GameModel gameModel;
 
         public void setServerController(ServerController server) {
             this.server = server;
+        }
+
+        public void setGameModel(GameModel gameModel) {
+            this.gameModel = gameModel;
+            menuController.menuView.setGameAmount(gameModel.getBoxes());
         }
         
         void Start() {
