@@ -1,6 +1,5 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using View;
 
 namespace Controller {
     
@@ -12,29 +11,17 @@ namespace Controller {
 
         public GameController gameController;
         
-        // Cameras
+        public MenuView menuView;
+        
         public Camera gameCamera;
         public Camera menuCamera;
     
         private MenuCameraScript menuCameraScript;
-    
-        // Menu Canvas
-        public Canvas menuCanvas;
-        public GameObject menuPanel;
-        public GameObject menuIndicator;
-        public Text menuError;
-        
-        public GameObject nickPanel;
-        public GameObject nickIndicator;
-        public TMP_InputField nickInput;
-        public Text nickError;
-    
-        // Game Canvas
-        public Canvas gameCanvas;
 
         // Client
         private string clientId;
 
+        // Server
         private ServerController server;
         
         private void Start() {
@@ -47,67 +34,52 @@ namespace Controller {
             
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
             menuCameraScript.addObserver(this);
-            
-            setMenuCameraActive();
-            resetMenu();
         }
         
-        private void OnApplicationQuit() {
-            
-        }
-    
-        // Actions ------------------
         public void playPressed() {
-            hideErrors();
-            turnOnIndicator(menuIndicator);
-            
+            menuView.setLoading(true);
             server.login(clientId, null);
         }
 
         public void leaderBoardPressed() {
-        
-        
-
+            
         }
 
         public void storePressed() {
-
-
+            
         }
 
         public void enterNickPressed() {
-            string nickname = nickInput.text;
+            string nickname = menuView.nickInput.text;
             if (string.IsNullOrEmpty(nickname)) { return; }
             
-            hideErrors();
-            turnOnIndicator(nickIndicator);
+            menuView.setLoading(true);
             server.login(clientId, nickname);
         }
-        // --------------------------
 
         public void navigate(Navigation to) {
             switch (to) {
                 case Navigation.MENU:
-                    resetMenu();
+                    setMenuCameraActive();
                     menuCameraScript.moveCamera(Navigation.MENU);
                     break;
                 
                 case Navigation.GAME:
-                    hideMenuCanvas();
                     menuCameraScript.moveCamera(Navigation.GAME);
                     break;
                 }
-            
         }
-        
-        // Camera Handling ----------------
+
         public void cameraReached(Navigation nav) {
             switch (nav) {
                 case Navigation.GAME:
                     setGameCameraActive();
-                    showGameCanvas();
+                    menuView.showGameMenu();
                     break;
-
+                
+                case Navigation.MENU:
+                    menuView.showMainMenu();
+                    break;
             }
         
         }
@@ -120,58 +92,6 @@ namespace Controller {
         private void setMenuCameraActive() {
             gameCamera.gameObject.SetActive(false);
             menuCamera.gameObject.SetActive(true);
-        }
-    
-        // -----------------------------------
-    
-        
-        // Menu Handling -------------------
-        public void hideMenuCanvas() {
-            menuCanvas.gameObject.SetActive(false);
-        }
-
-        public void resetMenu() {
-            gameCanvas.gameObject.SetActive(false);
-            menuCanvas.gameObject.SetActive(true);
-            menuPanel.SetActive(true);
-            nickPanel.SetActive(false);
-            hideErrors();
-            turnOffIndicators();
-        }
-
-        public void showNickMenu() {
-            menuPanel.SetActive(false);
-            nickPanel.SetActive(true);
-            hideErrors();
-            turnOffIndicators();
-        }
-
-        public void showNickError(bool show) {
-            nickError.gameObject.SetActive(show);
-        }
-
-        public void showMenuError(bool show) {
-            menuError.gameObject.SetActive(show);
-        }
-
-        public void hideErrors() {
-            showNickError(false);
-            showMenuError(false);
-        }
-
-        public void turnOffIndicators() {
-            menuIndicator.SetActive(false);
-            nickIndicator.SetActive(false);
-            menuCanvas.GetComponent<CanvasGroup>().interactable = true;
-        }
-
-        public void turnOnIndicator(GameObject indicator) {
-            indicator.SetActive(true);
-            menuCanvas.GetComponent<CanvasGroup>().interactable = false;
-        }
-
-        private void showGameCanvas() {
-            gameCanvas.gameObject.SetActive(true);
         }
 
     }

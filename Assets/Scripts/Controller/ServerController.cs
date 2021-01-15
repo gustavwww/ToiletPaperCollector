@@ -50,17 +50,16 @@ namespace Controller {
                     break;
 
                 case "error":
-                    
-                    if (cmd.getArgs()[0].StartsWith("usercouldnotbefound")) {
+                    string err = cmd.getArgs()[0];
+                    if (err.StartsWith("usercouldnotbefound")) {
                         UnityMainThread.instance.addJob(() => {
-                            menuController.turnOffIndicators();
-                            menuController.showNickMenu();
+                            menuController.menuView.setLoading(false);
+                            menuController.menuView.showNickPanel();
                         });
                     } else {
                         UnityMainThread.instance.addJob(() => {
-                            menuController.turnOffIndicators();
-                            menuController.showMenuError(true);
-                            menuController.showNickError(true);
+                            menuController.menuView.setLoading(false);
+                            menuController.menuView.displayError(err);
                         });
                     }
                     break;
@@ -70,9 +69,8 @@ namespace Controller {
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
             UnityMainThread.instance.addJob(() => {
-                menuController.turnOffIndicators();
-                menuController.showMenuError(true);
-                menuController.showNickError(true);
+                menuController.menuView.setLoading(false);
+                menuController.menuView.displayError(e.Message);
             });
         }
 

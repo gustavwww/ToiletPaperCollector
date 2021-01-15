@@ -43,7 +43,7 @@ public class EmptyBox : MonoBehaviour {
             } else {
                 // Empty completed, get box back...
 
-                anim.Play("CrateAnim");
+                anim.Play("NewCrateAnim");
 
                 isMoving = false;
             }

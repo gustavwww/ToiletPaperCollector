@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Controller;
 using UnityEngine;
 
@@ -11,52 +9,7 @@ public class MenuCameraScript : MonoBehaviour {
 
     private Animator animator;
     
-    void Start() {
-        this.animator = GetComponent<Animator>();
-    }
-    
-    public void moveCamera(Navigation to) {
-        switch (to) {
-            
-            case Navigation.GAME:
-                StartCoroutine(moveToGame());
-                break;
-            
-            case Navigation.MENU:
-                enableAnimator();
-                break;
-            
-        }
-    }
-    
-    private IEnumerator moveToGame() {
-        disableAnimator();
-        
-        float duration = 2.0f;
-        for (float t = .0f; t < duration; t += Time.deltaTime) {
-            transform.position = Vector3.Lerp(transform.position, gameCamera.transform.position, (Time.deltaTime * 3));
-            transform.rotation = Quaternion.Lerp(transform.rotation, gameCamera.transform.rotation, (Time.deltaTime * 3));
-            yield return null;
-        }
-        
-        informCameraReached(Navigation.GAME);
-    }
-    
-    void Update() {
-        
-    }
-    
-
-    private void disableAnimator() {
-        animator.enabled = false;
-    }
-
-    private void enableAnimator() {
-        animator.enabled = true;
-    }
-
-
-public List<MenuCameraListener> observers = new List<MenuCameraListener>();
+    public List<MenuCameraListener> observers = new List<MenuCameraListener>();
 
     public void addObserver(MenuCameraListener listener) {
         observers.Add(listener);
@@ -68,4 +21,44 @@ public List<MenuCameraListener> observers = new List<MenuCameraListener>();
         }
     }
     
+    void Start() {
+        animator = GetComponent<Animator>();
+    }
+    
+    public void moveCamera(Navigation to) {
+        switch (to) {
+            
+            case Navigation.GAME:
+                disableAnimator();
+                StartCoroutine(moveToLocation(gameCamera.gameObject.transform, to));
+                break;
+            
+            case Navigation.MENU:
+                enableAnimator();
+                informCameraReached(to);
+                break;
+            
+        }
+    }
+    
+    private IEnumerator moveToLocation(Transform transform, Navigation navigation) {
+
+        float duration = 2.0f;
+        for (float t = .0f; t < duration; t += Time.deltaTime) {
+            transform.position = Vector3.Lerp(this.transform.position, transform.position, (Time.deltaTime * 3));
+            transform.rotation = Quaternion.Lerp(this.transform.rotation, transform.rotation, (Time.deltaTime * 3));
+            yield return null;
+        }
+        
+        informCameraReached(navigation);
+    }
+    
+    private void disableAnimator() {
+        animator.enabled = false;
+    }
+
+    private void enableAnimator() {
+        animator.enabled = true;
+    }
+
 }
