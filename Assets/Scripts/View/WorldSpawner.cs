@@ -1,30 +1,30 @@
-﻿using UnityEngine;
+﻿using Model;
+using UnityEngine;
 
 namespace View {
 
-    public enum GameLevel {
-        LEVEL1 = 1,
-        LEVEL2 = 2
-    }
-    
     public class WorldSpawner : MonoBehaviour {
-        
-        private GameLevel level = GameLevel.LEVEL1;
 
         public GameObject spawnObject;
         public GameObject rigidBody;
         public GameObject[] box;
-        
-        public void setLevel(GameLevel level) {
-            this.level = level;
-        }
-        
+
         public void spawnBody() {
-            GameObject o = Instantiate(rigidBody, getRandomSpawnPos(box[(int) level]), spawnObject.transform.rotation, spawnObject.transform);
+            GameObject o = Instantiate(rigidBody, getRandomSpawnPos(box[(int) GameModel.LEVEL]), spawnObject.transform.rotation, spawnObject.transform);
 
             // Add rotation
             Rigidbody rgBody = o.GetComponent<Rigidbody>();
             rgBody.AddTorque(new Vector3(10000f, 10000f, 1000000f));
+        }
+
+        public void emptyBox() {
+            GameObject currentBox = box[(int) GameModel.LEVEL];
+            currentBox.GetComponent<EmptyBox>().empty();
+        }
+
+        public bool isEmptying() {
+            GameObject currentBox = box[(int) GameModel.LEVEL];
+            return currentBox.GetComponent<EmptyBox>().isEmptying();
         }
         
         private Vector3 getRandomSpawnPos(GameObject box) {

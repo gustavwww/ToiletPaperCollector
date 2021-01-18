@@ -2,8 +2,15 @@
 
 namespace Model {
     
+    public enum GameLevel {
+        LEVEL1 = 0,
+        LEVEL2 = 1
+    }
+    
     public class GameModel {
 
+        public static GameLevel LEVEL = GameLevel.LEVEL1;
+        
         private static readonly int MAX_BOX = 40;
 
         private int amount = 0;

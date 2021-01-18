@@ -41,12 +41,12 @@ public class MenuCameraScript : MonoBehaviour {
         }
     }
     
-    private IEnumerator moveToLocation(Transform transform, Navigation navigation) {
+    private IEnumerator moveToLocation(Transform location, Navigation navigation) {
 
         float duration = 2.0f;
         for (float t = .0f; t < duration; t += Time.deltaTime) {
-            transform.position = Vector3.Lerp(this.transform.position, transform.position, (Time.deltaTime * 3));
-            transform.rotation = Quaternion.Lerp(this.transform.rotation, transform.rotation, (Time.deltaTime * 3));
+            transform.position = Vector3.Lerp(transform.position, location.position, (Time.deltaTime * 3));
+            transform.rotation = Quaternion.Lerp(transform.rotation, location.rotation, (Time.deltaTime * 3));
             yield return null;
         }
         

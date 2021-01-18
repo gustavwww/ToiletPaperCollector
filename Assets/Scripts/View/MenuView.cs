@@ -10,11 +10,17 @@ namespace View {
         public GameObject menuPanel;
         public GameObject menuIndicator;
         public Text menuError;
+
+        public GameObject loginPanel;
+        public GameObject loginIndicator;
+        public Text loginError;
         
         public GameObject nickPanel;
         public GameObject nickIndicator;
         public TMP_InputField nickInput;
         public Text nickError;
+
+        public GameObject LBPanel;
 
         public Canvas gameCanvas;
         public TMP_Text gameLabel;
@@ -30,28 +36,54 @@ namespace View {
             gameCanvas.gameObject.SetActive(true);
             menuCanvas.gameObject.SetActive(false);
         }
+
+        public void showMenu(bool show) {
+            menuCanvas.gameObject.SetActive(show);
+        }
         
         public void showMainMenu() {
             gameCanvas.gameObject.SetActive(false);
             menuCanvas.gameObject.SetActive(true);
             menuPanel.SetActive(true);
             nickPanel.SetActive(false);
+            LBPanel.SetActive(false);
+            loginPanel.SetActive(false);
+            setLoading(false);
+            displayError(false);
+        }
+
+        public void showLoginPanel() {
+            menuPanel.SetActive(false);
+            LBPanel.SetActive(false);
+            nickPanel.SetActive(false);
+            loginPanel.SetActive(true);
             setLoading(false);
             displayError(false);
         }
         
         public void showNickPanel() {
             menuPanel.SetActive(false);
+            LBPanel.SetActive(false);
+            loginPanel.SetActive(false);
             nickPanel.SetActive(true);
             setLoading(false);
             displayError(false);
         }
-        
 
+        public void showLeaderBoardPanel() {
+            menuPanel.SetActive(false);
+            nickPanel.SetActive(false);
+            loginPanel.SetActive(false);
+            LBPanel.SetActive(true);
+            setLoading(false);
+            displayError(false);
+        }
+        
         public void setLoading(bool isLoading) {
             displayError(!isLoading);
             menuIndicator.SetActive(isLoading);
             nickIndicator.SetActive(isLoading);
+            loginIndicator.SetActive(isLoading);
             menuCanvasGroup.interactable = !isLoading;
         }
         
@@ -60,6 +92,8 @@ namespace View {
             nickError.text = error;
             menuError.gameObject.SetActive(true);
             menuError.text = error;
+            loginError.gameObject.SetActive(true);
+            loginError.text = error;
         }
 
         public void displayError(bool display) {
@@ -67,6 +101,8 @@ namespace View {
             nickError.text = "Invalid nickname, try again.";
             menuError.gameObject.SetActive(display);
             menuError.text = "Could not connect to server, try again.";
+            loginError.gameObject.SetActive(display);
+            loginError.text = "Could not connect to server, try again.";
         }
 
         public void setGameAmount(int amount) {

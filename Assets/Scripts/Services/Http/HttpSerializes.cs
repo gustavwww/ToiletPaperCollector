@@ -6,7 +6,6 @@ namespace Services.Http {
     public class HttpResult {
 
         public UserEntry[] users;
-
     }
 
     [Serializable]

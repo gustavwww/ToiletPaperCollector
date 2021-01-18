@@ -19,6 +19,8 @@ namespace Controller {
         private readonly TCPClient tcpClient;
         private readonly IServerProtocol protocol;
 
+        private bool loggedIn = false;
+        
         public ServerController(MenuController menuController, GameController gameController) {
             this.menuController = menuController;
             this.gameController = gameController;
@@ -48,9 +50,10 @@ namespace Controller {
             switch (cmd.getCmd()) {
                 case "logged":
                     int amount = int.Parse(cmd.getArgs()[0]);
-                    gameController.setGameModel(new GameModel(amount));
+                    loggedIn = true;
                     UnityMainThread.instance.addJob(() => {
-                        menuController.navigate(Navigation.GAME);
+                        menuController.menuView.showMainMenu();
+                        gameController.setGameModel(new GameModel(amount));
                     });
                     break;
 
@@ -73,10 +76,15 @@ namespace Controller {
 
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
+            loggedIn = false;
             UnityMainThread.instance.addJob(() => {
                 menuController.menuView.setLoading(false);
                 menuController.menuView.displayError(e.Message);
             });
+        }
+
+        public bool isLoggedIn() {
+            return loggedIn;
         }
 
     }

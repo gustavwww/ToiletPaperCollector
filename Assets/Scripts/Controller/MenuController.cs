@@ -18,6 +18,8 @@ namespace Controller {
     
         private MenuCameraScript menuCameraScript;
 
+        public LeaderBoardView lbView;
+
         // Client
         private string clientId;
 
@@ -34,15 +36,24 @@ namespace Controller {
             
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
             menuCameraScript.addObserver(this);
+            
+            menuView.showLoginPanel();
         }
-        
-        public void playPressed() {
+
+        public void loginPressed() {
             menuView.setLoading(true);
             server.login(clientId, null);
         }
+        
+        public void playPressed() {
+            if (!server.isLoggedIn()) { return; }
+            menuView.showMenu(false);
+            navigate(Navigation.GAME);
+        }
 
         public void leaderBoardPressed() {
-            
+            menuView.showLeaderBoardPanel();
+            lbView.loadLeaderBoard();
         }
 
         public void storePressed() {

@@ -8,8 +8,7 @@ namespace Controller {
 
         public MenuController menuController;
         public WorldSpawner spawner;
-        public EmptyBox emptyBoxManager;
-        
+
         private ServerController server;
         private GameModel gameModel;
 
@@ -19,6 +18,7 @@ namespace Controller {
 
         public void setGameModel(GameModel gameModel) {
             this.gameModel = gameModel;
+            gameModel.addListener(this);
             menuController.menuView.setGameAmount(gameModel.getBoxes());
         }
         
@@ -29,11 +29,11 @@ namespace Controller {
         
         public void boxFull() {
             server.sendTCP("count");
-            emptyBoxManager.empty();
+            spawner.emptyBox();
         }
 
         public void spawnButtonPressed() {
-            if (emptyBoxManager.isEmptying()) {
+            if (spawner.isEmptying()) {
                 return;
             }
             gameModel.incrementAmount();

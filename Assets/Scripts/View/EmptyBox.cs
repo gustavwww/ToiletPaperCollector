@@ -20,7 +20,6 @@ public class EmptyBox : MonoBehaviour {
     }
 
     public void empty() {
-
         if (isMoving) {
             return;
         }
