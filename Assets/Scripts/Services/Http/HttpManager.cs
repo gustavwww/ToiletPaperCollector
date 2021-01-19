@@ -8,7 +8,7 @@ namespace Services.Http {
     
     public class HttpManager {
 
-        private static readonly string URL = "http://localhost/v1/users/";
+        private static readonly string URL = "http://128.199.63.222/v1/users";
 
         public static IEnumerator getUsers(HttpCallback callback) {
             
@@ -21,7 +21,6 @@ namespace Services.Http {
                 Debug.Log(req.error);
             } else {
                 string json = req.downloadHandler.text;
-                Debug.Log(json);
 
                 HttpResult result = JsonUtility.FromJson<HttpResult>(json);
                 callback(result);
