@@ -19,6 +19,7 @@ namespace Controller {
         public void setGameModel(GameModel gameModel) {
             this.gameModel = gameModel;
             gameModel.addListener(this);
+            spawner.setLevel(gameModel.getLevel());
             menuController.menuView.setGameAmount(gameModel.getBoxes());
         }
         
@@ -27,11 +28,6 @@ namespace Controller {
             gameModel.addListener(this);
         }
         
-        public void boxFull() {
-            server.sendTCP("count");
-            spawner.emptyBox();
-        }
-
         public void spawnButtonPressed() {
             if (spawner.isEmptying()) {
                 return;
@@ -40,7 +36,17 @@ namespace Controller {
             menuController.menuView.setGameAmount(gameModel.getBoxes());
             spawner.spawnBody();
         }
+        
+        public void boxFull() {
+            server.sendTCP("count");
+            spawner.emptyBox();
+        }
 
+        public void levelUpdated(GameLevel level) {
+            // TODO: Move Camera etc.
+            
+            spawner.setLevel(level);
+        }
     }
     
 }

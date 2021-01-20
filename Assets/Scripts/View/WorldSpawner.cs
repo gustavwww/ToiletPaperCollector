@@ -9,8 +9,10 @@ namespace View {
         public GameObject rigidBody;
         public GameObject[] box;
 
+        private GameLevel level = GameLevel.LEVEL1;
+
         public void spawnBody() {
-            GameObject o = Instantiate(rigidBody, getRandomSpawnPos(box[(int) GameModel.LEVEL]), spawnObject.transform.rotation, spawnObject.transform);
+            GameObject o = Instantiate(rigidBody, getRandomSpawnPos(box[(int) level]), spawnObject.transform.rotation, spawnObject.transform);
 
             // Add rotation
             Rigidbody rgBody = o.GetComponent<Rigidbody>();
@@ -18,12 +20,12 @@ namespace View {
         }
 
         public void emptyBox() {
-            GameObject currentBox = box[(int) GameModel.LEVEL];
+            GameObject currentBox = box[(int) level];
             currentBox.GetComponent<EmptyBox>().empty();
         }
 
         public bool isEmptying() {
-            GameObject currentBox = box[(int) GameModel.LEVEL];
+            GameObject currentBox = box[(int) level];
             return currentBox.GetComponent<EmptyBox>().isEmptying();
         }
         
@@ -38,6 +40,10 @@ namespace View {
             Vector3 randomRange = new Vector3(Random.Range(-rangeX, rangeX), 6, Random.Range(-rangeZ, rangeZ));
 
             return origin + randomRange;
+        }
+
+        public void setLevel(GameLevel level) {
+            this.level = level;
         }
 
     }

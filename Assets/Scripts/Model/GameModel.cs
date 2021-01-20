@@ -9,10 +9,10 @@ namespace Model {
     
     public class GameModel {
 
-        public static GameLevel LEVEL = GameLevel.LEVEL1;
-        
         private static readonly int MAX_BOX = 40;
 
+        private GameLevel level = GameLevel.LEVEL1;
+        
         private int amount = 0;
         private int boxes;
         
@@ -20,12 +20,14 @@ namespace Model {
 
         public GameModel() {
             boxes = 0;
+            checkGameLevel();
         }
         
         public GameModel(int boxes) {
             this.boxes = boxes;
+            checkGameLevel();
         }
-        
+
         public void addListener(ModelListener listener) {
             listeners.Add(listener);
         }
@@ -33,6 +35,12 @@ namespace Model {
         private void informObserversBoxFull() {
             foreach (ModelListener listener in listeners) {
                 listener.boxFull();
+            }
+        }
+        
+        private void informObserversLevelUpdated(GameLevel newLevel) {
+            foreach (ModelListener listener in listeners) {
+                listener.levelUpdated(newLevel);
             }
         }
 
@@ -43,8 +51,17 @@ namespace Model {
                 amount = 0;
                 boxes++;
                 informObserversBoxFull();
+                checkGameLevel();
             }
 
+        }
+
+        private void checkGameLevel() {
+            // TODO: Implement
+        }
+
+        public GameLevel getLevel() {
+            return level;
         }
         
         public int getBoxes() {
