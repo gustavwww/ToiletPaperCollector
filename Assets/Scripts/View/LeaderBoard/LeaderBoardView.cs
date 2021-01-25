@@ -31,6 +31,14 @@ namespace View {
         }
 
         private void httpCallback(HttpResult result) {
+            foreach (Transform child in TotalPanel.transform) {
+                Destroy(child.gameObject);
+            }
+            
+            foreach (Transform child in WeeklyPanel.transform) {
+                Destroy(child.gameObject);
+            }
+
             createTotalTable(result);
             createWeeklyTable(result);
         }

@@ -8,12 +8,14 @@ namespace View {
 
         public Canvas menuCanvas;
         public GameObject menuPanel;
-        public GameObject menuIndicator;
-        public Text menuError;
+        public TMP_Text name;
+        public TMP_Text weeklyScore;
+        public TMP_Text totalScore;
 
         public GameObject loginPanel;
         public GameObject loginIndicator;
         public Text loginError;
+        public GameObject retryBtn;
         
         public GameObject nickPanel;
         public GameObject nickIndicator;
@@ -78,10 +80,20 @@ namespace View {
             setLoading(false);
             displayError(false);
         }
+
+        public void setMainStats(string name, int totalScore, int weeklyScore) {
+            this.name.text = name;
+            this.totalScore.text = totalScore.ToString();
+            this.weeklyScore.text = weeklyScore.ToString();
+        }
+        
+        public void setMainStats(int totalScore, int weeklyScore) {
+            this.totalScore.text = totalScore.ToString();
+            this.weeklyScore.text = weeklyScore.ToString();
+        }
         
         public void setLoading(bool isLoading) {
             displayError(!isLoading);
-            menuIndicator.SetActive(isLoading);
             nickIndicator.SetActive(isLoading);
             loginIndicator.SetActive(isLoading);
             menuCanvasGroup.interactable = !isLoading;
@@ -90,19 +102,17 @@ namespace View {
         public void displayError(string error) {
             nickError.gameObject.SetActive(true);
             nickError.text = error;
-            menuError.gameObject.SetActive(true);
-            menuError.text = error;
             loginError.gameObject.SetActive(true);
             loginError.text = error;
+            retryBtn.SetActive(true);
         }
 
         public void displayError(bool display) {
             nickError.gameObject.SetActive(display);
             nickError.text = "Invalid nickname, try again.";
-            menuError.gameObject.SetActive(display);
-            menuError.text = "Could not connect to server, try again.";
             loginError.gameObject.SetActive(display);
             loginError.text = "Could not connect to server, try again.";
+            retryBtn.SetActive(display);
         }
 
         public void setGameAmount(int amount) {

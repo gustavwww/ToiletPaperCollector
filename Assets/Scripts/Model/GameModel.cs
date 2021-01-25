@@ -15,16 +15,19 @@ namespace Model {
         
         private int amount = 0;
         private int boxes;
+        private int totalBoxes;
         
         private readonly IList<ModelListener> listeners = new List<ModelListener>();
 
         public GameModel() {
             boxes = 0;
+            totalBoxes = 0;
             checkGameLevel();
         }
         
-        public GameModel(int boxes) {
+        public GameModel(int boxes, int totalBoxes) {
             this.boxes = boxes;
+            this.totalBoxes = totalBoxes;
             checkGameLevel();
         }
 
@@ -50,6 +53,7 @@ namespace Model {
 
                 amount = 0;
                 boxes++;
+                totalBoxes++;
                 informObserversBoxFull();
                 checkGameLevel();
             }
@@ -66,6 +70,10 @@ namespace Model {
         
         public int getBoxes() {
             return boxes;
+        }
+
+        public int getTotalBoxes() {
+            return totalBoxes;
         }
 
     }

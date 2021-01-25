@@ -53,11 +53,11 @@ public class MenuCameraScript : MonoBehaviour {
         informCameraReached(navigation);
     }
     
-    private void disableAnimator() {
+    public void disableAnimator() {
         animator.enabled = false;
     }
 
-    private void enableAnimator() {
+    public void enableAnimator() {
         animator.enabled = true;
     }
 

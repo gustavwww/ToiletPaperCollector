@@ -19,6 +19,7 @@ namespace Controller {
         private readonly TCPClient tcpClient;
         private readonly IServerProtocol protocol;
 
+        private bool connected = false;
         private bool loggedIn = false;
         
         public ServerController(MenuController menuController, GameController gameController) {
@@ -30,8 +31,7 @@ namespace Controller {
 
             tcpClient.connect();
         }
-
-
+        
         public void login(string deviceID, [CanBeNull] string nickname) {
             if (nickname != null) {
                 sendTCP("login", deviceID, nickname);
@@ -48,12 +48,20 @@ namespace Controller {
             Command cmd = protocol.parseMessage(msg);
             
             switch (cmd.getCmd()) {
+                case "connected":
+                    connected = true;
+                    menuController.login();
+                    break;
+
                 case "logged":
-                    int amount = int.Parse(cmd.getArgs()[0]);
+                    string name = cmd.getArgs()[0];
+                    int totalAmount = int.Parse(cmd.getArgs()[1]);
+                    int amount = int.Parse(cmd.getArgs()[2]);
                     loggedIn = true;
                     UnityMainThread.instance.addJob(() => {
                         menuController.menuView.showMainMenu();
-                        gameController.setGameModel(new GameModel(amount));
+                        gameController.setGameModel(new GameModel(amount, totalAmount));
+                        menuController.menuView.setMainStats(name, totalAmount, amount);
                     });
                     break;
 
@@ -76,15 +84,20 @@ namespace Controller {
 
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
+            connected = false;
             loggedIn = false;
             UnityMainThread.instance.addJob(() => {
                 menuController.menuView.setLoading(false);
-                menuController.menuView.displayError(e.Message);
+                menuController.menuView.displayError(true);
             });
         }
 
         public bool isLoggedIn() {
             return loggedIn;
+        }
+
+        public bool isConnected() {
+            return connected;
         }
 
     }

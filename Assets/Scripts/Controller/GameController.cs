@@ -34,6 +34,7 @@ namespace Controller {
             }
             gameModel.incrementAmount();
             menuController.menuView.setGameAmount(gameModel.getBoxes());
+            menuController.menuView.setMainStats(gameModel.getTotalBoxes(), gameModel.getBoxes());
             spawner.spawnBody();
         }
         

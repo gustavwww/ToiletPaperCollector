@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Threading;
+using UnityEngine;
 using View;
 
 namespace Controller {
@@ -38,17 +40,28 @@ namespace Controller {
             menuCameraScript.addObserver(this);
             
             menuView.showLoginPanel();
+            menuView.setLoading(true);
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        public void login() {
+            server.login(clientId, null);
         }
 
         public void loginPressed() {
             menuView.setLoading(true);
-            server.login(clientId, null);
+            login();
         }
         
         public void playPressed() {
             if (!server.isLoggedIn()) { return; }
             menuView.showMenu(false);
             navigate(Navigation.GAME);
+        }
+
+        public void backPressed() {
+            menuView.showMainMenu();
+            setMenuCameraActive();
         }
 
         public void leaderBoardPressed() {
@@ -86,6 +99,7 @@ namespace Controller {
                 case Navigation.GAME:
                     setGameCameraActive();
                     menuView.showGameMenu();
+                    menuCameraScript.enableAnimator();
                     break;
                 
                 case Navigation.MENU:
