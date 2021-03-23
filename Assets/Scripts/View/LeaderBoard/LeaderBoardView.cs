@@ -14,15 +14,19 @@ namespace View {
         public void totalPressed() {
             TotalPanel.GetComponent<CanvasGroup>().alpha = 1;
             TotalPanel.GetComponent<CanvasGroup>().interactable = true;
+            TotalPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
             WeeklyPanel.GetComponent<CanvasGroup>().alpha = 0;
             WeeklyPanel.GetComponent<CanvasGroup>().interactable = false;
+            WeeklyPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
 
         public void weeklyPressed() {
             TotalPanel.GetComponent<CanvasGroup>().alpha = 0;
             TotalPanel.GetComponent<CanvasGroup>().interactable = false;
+            TotalPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             WeeklyPanel.GetComponent<CanvasGroup>().alpha = 1;
             WeeklyPanel.GetComponent<CanvasGroup>().interactable = true;
+            WeeklyPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
 
         public void loadLeaderBoard() {
@@ -45,7 +49,7 @@ namespace View {
 
         private void createTotalTable(HttpResult result) {
             
-            Array.Sort(result.users, new Comparison<UserEntry>((x, y) => x.amount-y.amount));
+            Array.Sort(result.users, new Comparison<UserEntry>((x, y) => y.amount-x.amount));
 
             for (int i = 0; i < result.users.Length; i++) {
                 var user = result.users[i];
@@ -63,7 +67,7 @@ namespace View {
 
         private void createWeeklyTable(HttpResult result) {
             
-            Array.Sort(result.users, new Comparison<UserEntry>((x, y) => x.amount-y.amount));
+            Array.Sort(result.users, new Comparison<UserEntry>((x, y) => y.amount-x.amount));
 
             for (int i = 0; i < result.users.Length; i++) {
                 var user = result.users[i];
