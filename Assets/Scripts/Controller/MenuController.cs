@@ -70,7 +70,7 @@ namespace Controller {
         }
 
         public void storePressed() {
-            
+            menuView.showStoreCanvas();
         }
 
         public void enterNickPressed() {

@@ -26,6 +26,8 @@ namespace View {
 
         public Canvas gameCanvas;
         public TMP_Text gameLabel;
+
+        public Canvas storeCanvas;
         
         private CanvasGroup menuCanvasGroup;
         
@@ -37,6 +39,7 @@ namespace View {
         public void showGameMenu() {
             gameCanvas.gameObject.SetActive(true);
             menuCanvas.gameObject.SetActive(false);
+            storeCanvas.gameObject.SetActive(false);
         }
 
         public void showMenu(bool show) {
@@ -45,6 +48,7 @@ namespace View {
         
         public void showMainMenu() {
             gameCanvas.gameObject.SetActive(false);
+            storeCanvas.gameObject.SetActive(false);
             menuCanvas.gameObject.SetActive(true);
             menuPanel.SetActive(true);
             nickPanel.SetActive(false);
@@ -79,6 +83,12 @@ namespace View {
             LBPanel.SetActive(true);
             setLoading(false);
             displayError(false);
+        }
+
+        public void showStoreCanvas() {
+            gameCanvas.gameObject.SetActive(false);
+            menuCanvas.gameObject.SetActive(false);
+            storeCanvas.gameObject.SetActive(true);
         }
 
         public void setMainStats(string name, int totalScore, int weeklyScore) {
