@@ -9568,6 +9568,7 @@ MonoBehaviour:
   LBPanel: {fileID: 1132966723}
   gameCanvas: {fileID: 1430129832}
   gameLabel: {fileID: 348612878}
+  storeCanvas: {fileID: 559979829}
 --- !u!4 &881360068
 Transform:
   m_ObjectHideFlags: 0
@@ -10239,7 +10240,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Toilet Paper
 
-    Master'
+    Collector'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f4ea08b1545914e448fe940629639dfa, type: 2}
@@ -17728,7 +17729,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Toilet Paper
 
-    Master'
+    Collector'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f4ea08b1545914e448fe940629639dfa, type: 2}
@@ -21304,19 +21305,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2001654713}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1122570509}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: playPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2001654713
 MonoBehaviour:
   m_ObjectHideFlags: 0
