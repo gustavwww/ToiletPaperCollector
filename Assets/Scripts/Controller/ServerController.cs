@@ -1,7 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Model;
-using Protocol;
 using Services;
 using Services.Protocol;
 using UnityEngine;

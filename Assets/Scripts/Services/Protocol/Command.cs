@@ -1,4 +1,4 @@
-namespace Protocol {
+namespace Services.Protocol {
 
     public class Command {
 

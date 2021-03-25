@@ -1,5 +1,4 @@
-﻿using Protocol;
-
+﻿
 namespace Services.Protocol {
     
     class ProtocolFacade : IServerProtocol {
