@@ -70,5 +70,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .idea/
+.vscode/
 **/omnisharp.json
 **/omnisharp.json.meta
