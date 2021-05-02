@@ -26,6 +26,7 @@ namespace Controller {
         void Start() {
             gameModel = new GameModel();
             gameModel.addListener(this);
+
         }
         
         public void spawnButtonPressed() {

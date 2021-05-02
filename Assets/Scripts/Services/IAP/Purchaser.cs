@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
+using View;
 
 namespace Services.IAP {
 
     public class Purchaser : MonoBehaviour, IStoreListener {
 
 
+        public WorldSpawner spawner;
+        public GameObject goldenPaper;
+        
         private static IStoreController storeController;
         private static IExtensionProvider extensionProvider;
         
@@ -21,11 +26,11 @@ namespace Services.IAP {
 
         private void initPurchaser() {
 
-            if (isInitialized) { return; }
+            if (isInitialized()) { return; }
 
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            builder.addProduct(goldenPaperID, ProductType.NonConsumable);
-
+            builder.AddProduct(goldenPaperID, ProductType.NonConsumable);
+            
             UnityPurchasing.Initialize(this, builder);
         }
 
@@ -50,10 +55,16 @@ namespace Services.IAP {
             storeController.InitiatePurchase(product);
         }
 
+        public void buyGoldenPaper() {
+            buyProduct(goldenPaperID);
+        }
+
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extension) {
             storeController = controller;
             extensionProvider = extension;
+            setupPurchased();
+            
             Debug.Log("Purchaser initialized");
         }
 
@@ -64,7 +75,8 @@ namespace Services.IAP {
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) {
             
             if(string.Equals(args.purchasedProduct.definition.id, goldenPaperID)) {
-                //TODO: Activate paper.
+                spawner.rigidBody = goldenPaper;
+                
                 Debug.Log("Paper purchased");
             }
             
@@ -73,6 +85,23 @@ namespace Services.IAP {
 
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) {
             Debug.Log("Purchase failed: " + failureReason);
+        }
+
+        private bool hasBoughtProduct(string id) {
+            if (!isInitialized()) {
+                return false;
+            }
+            
+            Product p = storeController.products.WithID(id);
+            return p != null && p.hasReceipt;
+        }
+
+        private void setupPurchased() {
+
+            if (hasBoughtProduct(goldenPaperID)) {
+                spawner.rigidBody = goldenPaper;
+            }
+            
         }
 
     }
