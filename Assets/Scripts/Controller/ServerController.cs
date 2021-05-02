@@ -9,7 +9,7 @@ namespace Controller {
     
     public class ServerController : TCPListener {
 
-        private static readonly string HOST = "localhost";
+        private static readonly string HOST = "188.166.99.144";
         private static readonly int PORT = 26000;
 
         private readonly MenuController menuController;
