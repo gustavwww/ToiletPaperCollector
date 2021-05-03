@@ -11,13 +11,12 @@ namespace Services.IAP {
 
         public WorldSpawner spawner;
         public GameObject goldenPaper;
-        
+
         private static IStoreController storeController;
         private static IExtensionProvider extensionProvider;
-        
-        private string goldenPaperID = "golden_paper";
-        
-        
+
+        public readonly string goldenPaperID = "golden_paper";
+
         void Start() {
             if (storeController == null) {
                 initPurchaser();
@@ -26,11 +25,13 @@ namespace Services.IAP {
 
         private void initPurchaser() {
 
-            if (isInitialized()) { return; }
+            if (isInitialized()) {
+                return;
+            }
 
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct(goldenPaperID, ProductType.NonConsumable);
-            
+
             UnityPurchasing.Initialize(this, builder);
         }
 
@@ -51,7 +52,7 @@ namespace Services.IAP {
                 return;
             }
 
-            
+
             storeController.InitiatePurchase(product);
         }
 
@@ -64,7 +65,7 @@ namespace Services.IAP {
             storeController = controller;
             extensionProvider = extension;
             setupPurchased();
-            
+
             Debug.Log("Purchaser initialized");
         }
 
@@ -73,13 +74,13 @@ namespace Services.IAP {
         }
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) {
-            
-            if(string.Equals(args.purchasedProduct.definition.id, goldenPaperID)) {
+
+            if (string.Equals(args.purchasedProduct.definition.id, goldenPaperID)) {
                 spawner.rigidBody = goldenPaper;
                 PlayerPrefs.SetInt("golden_paper", 1);
                 Debug.Log("Paper purchased");
             }
-            
+
             return PurchaseProcessingResult.Complete;
         }
 
@@ -91,19 +92,26 @@ namespace Services.IAP {
             if (!isInitialized()) {
                 return false;
             }
-            
+
             Product p = storeController.products.WithID(id);
             return p != null && p.hasReceipt;
         }
 
         private void setupPurchased() {
-            
+
             if (hasBoughtProduct(goldenPaperID) || PlayerPrefs.GetInt("golden_paper") == 1) {
                 spawner.rigidBody = goldenPaper;
             }
-            
+
+        }
+
+        public string getProductPrice(string productID) {
+            if (storeController != null) {
+                return storeController.products.WithID(productID).metadata.localizedPriceString;
+            }
+
+            return null;
         }
 
     }
-
 }
