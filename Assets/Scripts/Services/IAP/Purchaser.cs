@@ -76,7 +76,7 @@ namespace Services.IAP {
             
             if(string.Equals(args.purchasedProduct.definition.id, goldenPaperID)) {
                 spawner.rigidBody = goldenPaper;
-                
+                PlayerPrefs.SetInt("golden_paper", 1);
                 Debug.Log("Paper purchased");
             }
             
@@ -97,8 +97,8 @@ namespace Services.IAP {
         }
 
         private void setupPurchased() {
-
-            if (hasBoughtProduct(goldenPaperID)) {
+            
+            if (hasBoughtProduct(goldenPaperID) || PlayerPrefs.GetInt("golden_paper") == 1) {
                 spawner.rigidBody = goldenPaper;
             }
             
