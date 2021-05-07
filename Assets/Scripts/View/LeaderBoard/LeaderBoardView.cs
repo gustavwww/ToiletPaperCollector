@@ -9,24 +9,26 @@ namespace View {
         
         public GameObject TotalPanel;
         public GameObject WeeklyPanel;
+        public CanvasGroup TotalScroll;
+        public CanvasGroup WeeklyScroll;
         public GameObject ListItem;
 
         public void totalPressed() {
-            TotalPanel.GetComponent<CanvasGroup>().alpha = 1;
-            TotalPanel.GetComponent<CanvasGroup>().interactable = true;
-            TotalPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            WeeklyPanel.GetComponent<CanvasGroup>().alpha = 0;
-            WeeklyPanel.GetComponent<CanvasGroup>().interactable = false;
-            WeeklyPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            TotalScroll.alpha = 1;
+            TotalScroll.interactable = true;
+            TotalScroll.blocksRaycasts = true;
+            WeeklyScroll.alpha = 0;
+            WeeklyScroll.interactable = false;
+            WeeklyScroll.blocksRaycasts = false;
         }
 
         public void weeklyPressed() {
-            TotalPanel.GetComponent<CanvasGroup>().alpha = 0;
-            TotalPanel.GetComponent<CanvasGroup>().interactable = false;
-            TotalPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            WeeklyPanel.GetComponent<CanvasGroup>().alpha = 1;
-            WeeklyPanel.GetComponent<CanvasGroup>().interactable = true;
-            WeeklyPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            TotalScroll.alpha = 0;
+            TotalScroll.interactable = false;
+            TotalScroll.blocksRaycasts = false;
+            WeeklyScroll.alpha = 1;
+            WeeklyScroll.interactable = true;
+            WeeklyScroll.blocksRaycasts = true;
         }
 
         public void loadLeaderBoard() {

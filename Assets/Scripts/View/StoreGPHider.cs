@@ -10,8 +10,7 @@ namespace View {
         
         void Start() {
             if (PlayerPrefs.GetInt("golden_paper") == 1) {
-                Debug.Log("Called");
-               btnText.text = "Purchased";
+                btnText.text = "Purchased";
                btnText.color = new Color(0.33f, 1f, 0.35f);
                 purchaseBtn.interactable = false;
 
