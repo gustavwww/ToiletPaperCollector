@@ -14,7 +14,7 @@ namespace View {
                 label.text = price;
             }
 
-            label.text = "3.99 $";
+            label.text = "";
         }
     }
 }

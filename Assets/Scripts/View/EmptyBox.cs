@@ -5,7 +5,7 @@ using UnityEngine;
 public class EmptyBox : MonoBehaviour {
 
     private static readonly float INIT_DELAY = 1.0f;
-    private static readonly float MOVE_TIME = 1.8f;
+    private static readonly float MOVE_TIME = 2f;
     private static readonly float MOVE_SPEED = 4;
 
     private bool isMoving = false;
