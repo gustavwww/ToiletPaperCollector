@@ -113,5 +113,26 @@ namespace Services.IAP {
             return null;
         }
 
+        public void restorePurchases() {
+            
+            if (!isInitialized()) {
+                Debug.Log("RestorePurchases FAIL. Not initialized.");
+                return;
+            }
+
+            if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
+
+                var apple = extensionProvider.GetExtension<IAppleExtensions>();
+                apple.RestoreTransactions((result) => {
+                    Debug.Log("Restoring purchase: " + result);
+                });
+
+
+            } else {
+                Debug.Log("RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
+            }
+            
+        }
+
     }
 }
