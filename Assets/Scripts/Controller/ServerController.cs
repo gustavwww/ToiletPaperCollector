@@ -1,36 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Model;
 using Services;
 using Services.Protocol;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Controller {
     
-    public class ServerController : TCPListener {
+    public class ServerController : MonoBehaviour, TCPListener {
 
         private static readonly string HOST = "188.166.99.144";
         private static readonly int PORT = 26000;
 
-        private readonly MenuController menuController;
-        private readonly GameController gameController;
-
-        private readonly TCPClient tcpClient;
-        private readonly IServerProtocol protocol;
+        private TCPClient tcpClient;
+        private IServerProtocol protocol;
 
         private bool connected = false;
         private bool loggedIn = false;
-        
-        public ServerController(MenuController menuController, GameController gameController) {
-            this.menuController = menuController;
-            this.gameController = gameController;
+
+        private readonly List<ServerControllerListener> listeners = new List<ServerControllerListener>();
+
+        public void addListener(ServerControllerListener listener) {
+            listeners.Add(listener);
+        }
+
+        public void removeListener(ServerControllerListener listener) {
+            listeners.Remove(listener);
+        }
+
+        private void Start() {
             tcpClient = new TCPClient(HOST, PORT);
             tcpClient.addListener(this);
             protocol = ProtocolFactory.getServerProtocol();
+        }
 
+        public void connect() {
             tcpClient.connect();
         }
-        
+
         public void login(string deviceID, [CanBeNull] string nickname) {
             if (nickname != null) {
                 sendTCP("login", deviceID, nickname);
@@ -49,7 +58,7 @@ namespace Controller {
             switch (cmd.getCmd()) {
                 case "connected":
                     connected = true;
-                    menuController.login();
+                    informListenersConnected();
                     break;
 
                 case "logged":
@@ -57,37 +66,56 @@ namespace Controller {
                     int totalAmount = int.Parse(cmd.getArgs()[1]);
                     int amount = int.Parse(cmd.getArgs()[2]);
                     loggedIn = true;
-                    UnityMainThread.instance.addJob(() => {
-                        menuController.menuView.showMainMenu();
-                        gameController.setGameModel(new GameModel(amount, totalAmount));
-                        menuController.menuView.setMainStats(name, totalAmount, amount);
-                    });
+                    informListenersLogged(name, amount, totalAmount);
                     break;
 
                 case "error":
                     string err = cmd.getArgs()[0];
-                    if (err.StartsWith("usercouldnotbefound")) {
-                        UnityMainThread.instance.addJob(() => {
-                            menuController.menuView.setLoading(false);
-                            menuController.menuView.showNickPanel();
-                        });
-                    } else {
-                        UnityMainThread.instance.addJob(() => {
-                            menuController.menuView.setLoading(false);
-                            menuController.menuView.displayError(err);
-                        });
-                    }
+                    informListenersError(err);
                     break;
             }
         }
+        
+        // err.StartsWith("usercouldnotbefound")
 
         public void exceptionOccurred(Exception e) {
             Debug.Log("Error occurred: " + e.Message);
             connected = false;
             loggedIn = false;
             UnityMainThread.instance.addJob(() => {
-                menuController.menuView.setLoading(false);
-                menuController.menuView.displayError(true);
+                
+            });
+        }
+
+        private void informListenersConnected() {
+            UnityMainThread.instance.addJob(() => {
+                foreach (ServerControllerListener l in listeners) {
+                    l.onConnected();
+                }
+            });
+        }
+        
+        private void informListenersLogged(string name, int amount, int totalAmount) {
+            UnityMainThread.instance.addJob(() => {
+                foreach (ServerControllerListener l in listeners) {
+                    l.onLoggedIn(name, amount, totalAmount);
+                }
+            });
+        }
+        
+        private void informListenersException(Exception e) {
+            UnityMainThread.instance.addJob(() => {
+                foreach (ServerControllerListener l in listeners) {
+                    l.onException(e);
+                }
+            });
+        }
+        
+        private void informListenersError(string message) {
+            UnityMainThread.instance.addJob(() => {
+                foreach (ServerControllerListener l in listeners) {
+                    l.onError(message);
+                }
             });
         }
 
@@ -100,6 +128,5 @@ namespace Controller {
         }
 
     }
-    
-    
+
 }

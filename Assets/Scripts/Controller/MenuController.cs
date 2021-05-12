@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Threading;
+using Model;
 using Services.IAP;
+using TMPro;
 using UnityEngine;
 using View;
 
@@ -10,78 +12,55 @@ namespace Controller {
         MENU, GAME
     }
     
-    public class MenuController : MonoBehaviour, MenuCameraListener {
+    public class MenuController : MonoBehaviour, MenuCameraListener, ModelListener {
 
-        public GameController gameController;
+        public GameModel gameModel;
         
-        public MenuView menuView;
+        public Canvas menuCanvas;
         
         public Camera gameCamera;
         public Camera menuCamera;
-    
         private MenuCameraScript menuCameraScript;
 
-        public LeaderBoardView lbView;
+        public Canvas gameCanvas;
+        public Canvas storeCanvas;
+        public GameObject leaderBoardPanel;
 
-        // Client
-        private string clientId;
+        public TMP_Text name;
+        public TMP_Text weeklyScore;
+        public TMP_Text totalScore;
 
-        // Server
-        private ServerController server;
-        
         private void Start() {
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            
-            clientId = SystemInfo.deviceUniqueIdentifier;
-
-            server = new ServerController(this, gameController);
-            gameController.setServerController(server);
-            
             menuCameraScript = menuCamera.GetComponent<MenuCameraScript>();
             menuCameraScript.addObserver(this);
             
-            menuView.showLoginPanel();
-            menuView.setLoading(true);
+            gameModel.addListener(this);
+
+            name.text = gameModel.getNickName();
+            weeklyScore.text = gameModel.getBoxes().ToString();
+            totalScore.text = gameModel.getBoxes().ToString();
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        public void login() {
-            server.login(clientId, null);
-        }
-
-        public void loginPressed() {
-            menuView.setLoading(true);
-            login();
-        }
-        
         public void playPressed() {
-            if (!server.isLoggedIn()) { return; }
-            menuView.showMenu(false);
+            menuCanvas.gameObject.SetActive(false);
             navigate(Navigation.GAME);
         }
 
-        public void backPressed() {
-            menuView.showMainMenu();
-            setMenuCameraActive();
+        public void backToMainMenuPressed() {
+            navigate(Navigation.MENU);
         }
 
         public void leaderBoardPressed() {
-            menuView.showLeaderBoardPanel();
-            lbView.loadLeaderBoard();
+            leaderBoardPanel.SetActive(true);
+            leaderBoardPanel.GetComponent<LeaderBoardPanelController>().loadLeaderBoard();
+            gameObject.SetActive(false);
         }
 
         public void storePressed() {
-            menuView.showStoreCanvas();
+            menuCanvas.gameObject.SetActive(false);
+            storeCanvas.gameObject.SetActive(true);
         }
-
-        public void enterNickPressed() {
-            string nickname = menuView.nickInput.text;
-            if (string.IsNullOrEmpty(nickname)) { return; }
-            
-            menuView.setLoading(true);
-            server.login(clientId, nickname);
-        }
-
+        
         public void navigate(Navigation to) {
             switch (to) {
                 case Navigation.MENU:
@@ -99,12 +78,13 @@ namespace Controller {
             switch (nav) {
                 case Navigation.GAME:
                     setGameCameraActive();
-                    menuView.showGameMenu();
+                    gameCanvas.gameObject.SetActive(true);
                     menuCameraScript.enableAnimator();
                     break;
                 
                 case Navigation.MENU:
-                    menuView.showMainMenu();
+                    gameCanvas.gameObject.SetActive(false);
+                    menuCanvas.gameObject.SetActive(true);
                     break;
             }
         
@@ -120,6 +100,13 @@ namespace Controller {
             menuCamera.gameObject.SetActive(true);
         }
 
+        public void boxFull() {
+            weeklyScore.text = gameModel.getBoxes().ToString();
+            totalScore.text = gameModel.getTotalBoxes().ToString();
+        }
+
+        public void levelUpdated(GameLevel level) {
+        }
     }
 
 }

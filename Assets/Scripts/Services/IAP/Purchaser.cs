@@ -7,9 +7,7 @@ using View;
 namespace Services.IAP {
 
     public class Purchaser : MonoBehaviour, IStoreListener {
-
-
-        public WorldSpawner spawner;
+        
         public GameObject goldenPaper;
 
         private static IStoreController storeController;
@@ -76,7 +74,6 @@ namespace Services.IAP {
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) {
 
             if (string.Equals(args.purchasedProduct.definition.id, goldenPaperID)) {
-                spawner.rigidBody = goldenPaper;
                 PlayerPrefs.SetInt("golden_paper", 1);
                 Debug.Log("Paper purchased");
             }
@@ -100,7 +97,7 @@ namespace Services.IAP {
         private void setupPurchased() {
 
             if (hasBoughtProduct(goldenPaperID) || PlayerPrefs.GetInt("golden_paper") == 1) {
-                spawner.rigidBody = goldenPaper;
+                
             }
 
         }

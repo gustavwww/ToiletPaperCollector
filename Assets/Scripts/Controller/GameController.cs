@@ -1,53 +1,52 @@
-﻿using Model;
+﻿using System;
+using System.Collections.Generic;
+using Model;
+using TMPro;
 using UnityEngine;
 using View;
 
 namespace Controller {
     
-    public class GameController : MonoBehaviour, ModelListener {
+    public class GameController : MonoBehaviour, ModelListener, ServerControllerListener {
 
-        public MenuController menuController;
-        public WorldSpawner spawner;
+        public ServerController serverController;
+        public SkinManager skinManager;
+        public GameModel gameModel;
 
-        private ServerController server;
-        private GameModel gameModel;
+        public List<GameObject> boxes;
 
-        public void setServerController(ServerController server) {
-            this.server = server;
-        }
-
-        public void setGameModel(GameModel gameModel) {
-            this.gameModel = gameModel;
-            gameModel.addListener(this);
-            spawner.setLevel(gameModel.getLevel());
-            menuController.menuView.setGameAmount(gameModel.getBoxes());
-        }
+        public TMP_Text score;
         
+        public void onConnected() {
+        }
+
+        public void onLoggedIn(string name, int amount, int totalAmount) {
+        }
+
+        public void onException(Exception e) {
+        }
+
+        public void onError(string message) {
+        }
+
         void Start() {
-            gameModel = new GameModel();
+            serverController.addListener(this);
             gameModel.addListener(this);
 
+            score.text = gameModel.getBoxes().ToString();
         }
         
         public void spawnButtonPressed() {
-            if (spawner.isEmptying()) {
-                return;
-            }
             gameModel.incrementAmount();
-            menuController.menuView.setGameAmount(gameModel.getBoxes());
-            menuController.menuView.setMainStats(gameModel.getTotalBoxes(), gameModel.getBoxes());
-            spawner.spawnBody();
+            skinManager.spawnBody(boxes[0]);
         }
         
         public void boxFull() {
-            server.sendTCP("count");
-            spawner.emptyBox();
+            serverController.sendTCP("count");
+            score.text = gameModel.getBoxes().ToString();
         }
 
         public void levelUpdated(GameLevel level) {
-            // TODO: Move Camera etc.
-            
-            spawner.setLevel(level);
         }
     }
     

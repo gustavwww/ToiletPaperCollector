@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Model {
     
@@ -7,11 +9,13 @@ namespace Model {
         LEVEL2 = 1
     }
     
-    public class GameModel {
+    public class GameModel : MonoBehaviour {
 
         private static readonly int MAX_BOX = 40;
 
         private GameLevel level = GameLevel.LEVEL1;
+
+        private string nickname;
         
         private int amount = 0;
         private int boxes;
@@ -19,20 +23,13 @@ namespace Model {
         
         private readonly IList<ModelListener> listeners = new List<ModelListener>();
 
-        public GameModel() {
-            boxes = 0;
-            totalBoxes = 0;
-            checkGameLevel();
-        }
-        
-        public GameModel(int boxes, int totalBoxes) {
-            this.boxes = boxes;
-            this.totalBoxes = totalBoxes;
-            checkGameLevel();
-        }
-
         public void addListener(ModelListener listener) {
             listeners.Add(listener);
+        }
+
+        private void Start() {
+            boxes = 0;
+            totalBoxes = 0;
         }
 
         private void informObserversBoxFull() {
@@ -55,17 +52,19 @@ namespace Model {
                 boxes++;
                 totalBoxes++;
                 informObserversBoxFull();
-                checkGameLevel();
             }
 
         }
 
         private void checkGameLevel() {
-            // TODO: Implement
         }
 
         public GameLevel getLevel() {
             return level;
+        }
+
+        public string getNickName() {
+            return nickname;
         }
         
         public int getBoxes() {
@@ -74,6 +73,15 @@ namespace Model {
 
         public int getTotalBoxes() {
             return totalBoxes;
+        }
+        
+        public void setAmount(int amount, int totalAmount) {
+            this.boxes = amount;
+            this.totalBoxes = totalAmount;
+        }
+
+        public void setNickName(string nickname) {
+            this.nickname = nickname;
         }
 
     }
