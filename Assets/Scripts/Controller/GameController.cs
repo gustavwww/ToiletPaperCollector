@@ -20,7 +20,7 @@ namespace Controller {
         public void onConnected() {
         }
 
-        public void onLoggedIn(string name, int amount, int totalAmount) {
+        public void onLoggedIn(string name, int coins, int amount, int totalAmount) {
         }
 
         public void onException(Exception e) {

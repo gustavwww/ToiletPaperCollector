@@ -11,7 +11,10 @@ namespace Controller {
     
     public class ServerController : MonoBehaviour, TCPListener {
 
-        private static readonly string HOST = "188.166.99.144";
+        public DuelCommandHandler duelCommandHandler;
+        
+        // 188.166.99.144
+        private static readonly string HOST = "localhost";
         private static readonly int PORT = 26000;
 
         private TCPClient tcpClient;
@@ -63,12 +66,19 @@ namespace Controller {
 
                 case "logged":
                     string name = cmd.getArgs()[0];
-                    int totalAmount = int.Parse(cmd.getArgs()[1]);
-                    int amount = int.Parse(cmd.getArgs()[2]);
+                    int coins = int.Parse(cmd.getArgs()[1]);
+                    int totalAmount = int.Parse(cmd.getArgs()[2]);
+                    int amount = int.Parse(cmd.getArgs()[3]);
                     loggedIn = true;
-                    informListenersLogged(name, amount, totalAmount);
+                    informListenersLogged(name, coins, amount, totalAmount);
                     break;
 
+                case "duel":
+                    UnityMainThread.instance.addJob(() => {
+                        duelCommandHandler.handleDuelCommand(cmd);
+                    });
+                    break;
+                
                 case "error":
                     string err = cmd.getArgs()[0];
                     informListenersError(err);
@@ -82,9 +92,7 @@ namespace Controller {
             Debug.Log("Error occurred: " + e.Message);
             connected = false;
             loggedIn = false;
-            UnityMainThread.instance.addJob(() => {
-                
-            });
+            informListenersException(e);
         }
 
         private void informListenersConnected() {
@@ -95,10 +103,10 @@ namespace Controller {
             });
         }
         
-        private void informListenersLogged(string name, int amount, int totalAmount) {
+        private void informListenersLogged(string name, int coins, int amount, int totalAmount) {
             UnityMainThread.instance.addJob(() => {
                 foreach (ServerControllerListener l in listeners) {
-                    l.onLoggedIn(name, amount, totalAmount);
+                    l.onLoggedIn(name, coins, amount, totalAmount);
                 }
             });
         }

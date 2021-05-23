@@ -4,6 +4,7 @@ using Model;
 using Services.IAP;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using View;
 
 namespace Controller {
@@ -25,6 +26,7 @@ namespace Controller {
         public Canvas gameCanvas;
         public Canvas storeCanvas;
         public GameObject leaderBoardPanel;
+        public GameObject duelPanel;
 
         public TMP_Text name;
         public TMP_Text weeklyScore;
@@ -53,6 +55,11 @@ namespace Controller {
         public void leaderBoardPressed() {
             leaderBoardPanel.SetActive(true);
             leaderBoardPanel.GetComponent<LeaderBoardPanelController>().loadLeaderBoard();
+            gameObject.SetActive(false);
+        }
+
+        public void duelPressed() {
+            duelPanel.SetActive(true);
             gameObject.SetActive(false);
         }
 

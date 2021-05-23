@@ -31,7 +31,7 @@ namespace Model {
             boxes = 0;
             totalBoxes = 0;
         }
-
+        
         private void informObserversBoxFull() {
             foreach (ModelListener listener in listeners) {
                 listener.boxFull();

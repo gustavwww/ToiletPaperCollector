@@ -33,7 +33,7 @@ namespace Controller {
             serverController.login(SystemInfo.deviceUniqueIdentifier, null);
         }
 
-        public void onLoggedIn(string name, int amount, int totalAmount) {
+        public void onLoggedIn(string name, int coins, int amount, int totalAmount) {
             gameModel.setNickName(name);
             gameModel.setAmount(amount, totalAmount);
             gameObject.SetActive(false);
