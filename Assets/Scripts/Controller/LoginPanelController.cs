@@ -1,12 +1,14 @@
 ﻿using System;
+using Controller.CommandHandlers;
 using Model;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Controller {
-    public class LoginPanelController : MonoBehaviour, ServerControllerListener {
+    public class LoginPanelController : MonoBehaviour, ServerControllerListener, ServerErrorListener {
 
         public ServerController serverController;
+        public ServerErrorHandler serverErrorHandler;
 
         public GameModel gameModel;
         
@@ -20,13 +22,16 @@ namespace Controller {
         private void Start() {
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             
+            serverErrorHandler.addListener(this);
             serverController.addListener(this);
             serverController.connect();
         }
 
         public void retryPressed() {
+            indicator.SetActive(true);
+            retryBtn.SetActive(false);
             
-            
+            serverController.login(SystemInfo.deviceUniqueIdentifier, null);
         }
 
         public void onConnected() {
@@ -47,8 +52,10 @@ namespace Controller {
         }
 
         public void onError(string message) {
-            gameObject.SetActive(false);
-            nickPanel.SetActive(true);
+            if (gameObject.activeSelf) {
+                gameObject.SetActive(false);
+                nickPanel.SetActive(true);
+            }
         }
         
     }

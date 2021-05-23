@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Controller.CommandHandlers;
 using Model;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Controller {
+namespace Controller.Duel {
     
     public class DuelRequestController : MonoBehaviour, DuelCommandListener {
 
@@ -86,6 +85,9 @@ namespace Controller {
         }
 
         public void duelEnded(string winner) {
+        }
+
+        public void userLeft(string nickname) {
         }
 
         public void userReadyUp(string nickname) {

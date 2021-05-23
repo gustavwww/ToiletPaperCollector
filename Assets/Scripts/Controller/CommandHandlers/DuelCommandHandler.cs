@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Services.Protocol;
 using UnityEngine;
 
-namespace Controller {
+namespace Controller.CommandHandlers {
 
     public enum DuelResponseType {
         NOTFOUND, CANCELLED, FINISHED
@@ -22,7 +21,7 @@ namespace Controller {
             listeners.Remove(listener);
         }
 
-        public void sendRequest(String nickname) {
+        public void sendRequest(string nickname) {
             serverController.sendTCP("duel", "request", nickname);
         }
 
@@ -46,13 +45,13 @@ namespace Controller {
             if (!cmd.getCmd().Equals("duel") || cmd.getArgs().Length < 1) {
                 return;
             }
-            String[] args = cmd.getArgs();
-            String subCmd = args[0];
+            string[] args = cmd.getArgs();
+            string subCmd = args[0];
 
             switch (subCmd) {
                 
                 case "request":
-                    String from = args[1];
+                    string from = args[1];
                     informGotRequest(from);
                     break;
                 
@@ -77,17 +76,20 @@ namespace Controller {
                     break;
                 
                 case "ended":
-                    String winner = args[1];
+                    string winner = args[1];
                     informDuelEnded(winner);
                     break;
                 
+                case "left":
+                    break;
+                
                 case "ready":
-                    String rdy = args[1];
+                    string rdy = args[1];
                     informUserReadyUp(rdy);
                     break;
                 
                 case "count":
-                    String sender = args[1];
+                    string sender = args[1];
                     int amount = int.Parse(args[2]);
                     informCountSent(sender, amount);
                     break;
@@ -105,7 +107,7 @@ namespace Controller {
 
         }
 
-        private void informGotRequest(String from) {
+        private void informGotRequest(string from) {
             foreach (var l in listeners) {
                 l.gotRequest(from);
             }
@@ -123,19 +125,25 @@ namespace Controller {
             }
         }
         
-        private void informDuelEnded(String winner) {
+        private void informDuelEnded(string winner) {
             foreach (var l in listeners) {
                 l.duelEnded(winner);
             }
         }
         
-        private void informUserReadyUp(String nickname) {
+        private void informUserLeft(string nickname) {
+            foreach (var l in listeners) {
+                l.userLeft(nickname);
+            }
+        }
+        
+        private void informUserReadyUp(string nickname) {
             foreach (var l in listeners) {
                 l.userReadyUp(nickname);
             }
         }
         
-        private void informCountSent(String sender, int count) {
+        private void informCountSent(string sender, int count) {
             foreach (var l in listeners) {
                 l.countSent(sender, count);
             }

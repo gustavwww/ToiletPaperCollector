@@ -1,13 +1,15 @@
 ﻿using System;
+using Controller.CommandHandlers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Controller {
     
-    public class NickPanelController : MonoBehaviour, ServerControllerListener {
+    public class NickPanelController : MonoBehaviour, ServerControllerListener, ServerErrorListener {
 
         public ServerController serverController;
+        public ServerErrorHandler serverErrorHandler;
         
         public TMP_InputField input;
         public GameObject indicator;
@@ -16,6 +18,7 @@ namespace Controller {
         public GameObject mainMenuPanel;
 
         private void Start() {
+            serverErrorHandler.addListener(this);
             serverController.addListener(this);
         }
 

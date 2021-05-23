@@ -7,7 +7,7 @@ using View;
 
 namespace Controller {
     
-    public class GameController : MonoBehaviour, ModelListener, ServerControllerListener {
+    public class GameController : MonoBehaviour, ModelListener {
 
         public ServerController serverController;
         public SkinManager skinManager;
@@ -16,21 +16,8 @@ namespace Controller {
         public List<GameObject> boxes;
 
         public TMP_Text score;
-        
-        public void onConnected() {
-        }
-
-        public void onLoggedIn(string name, int coins, int amount, int totalAmount) {
-        }
-
-        public void onException(Exception e) {
-        }
-
-        public void onError(string message) {
-        }
 
         void Start() {
-            serverController.addListener(this);
             gameModel.addListener(this);
 
             score.text = gameModel.getBoxes().ToString();

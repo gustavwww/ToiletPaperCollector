@@ -4260,6 +4260,7 @@ MonoBehaviour:
   duelCommandHandler: {fileID: 174198453}
   gameModel: {fileID: 208661597}
   mainMenuCanvas: {fileID: 571512707}
+  mainMenuPanel: {fileID: 837252878}
   duelController: {fileID: 558922087}
   duelCanvas: {fileID: 733723664}
   duelCamera: {fileID: 1425743006}
@@ -11638,6 +11639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duelCommandHandler: {fileID: 174198453}
+  mainMenuCanvas: {fileID: 0}
+  duelCamera: {fileID: 0}
   name: {fileID: 910916754}
   nameRdy: {fileID: 1978306592}
   score: {fileID: 227297979}

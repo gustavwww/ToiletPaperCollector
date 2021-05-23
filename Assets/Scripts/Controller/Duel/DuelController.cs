@@ -1,10 +1,9 @@
-﻿using System;
-using Model;
+﻿using Controller.CommandHandlers;
 using TMPro;
 using UnityEngine;
 using View;
 
-namespace Controller {
+namespace Controller.Duel {
     
     public class DuelController : MonoBehaviour, DuelCommandListener {
 
@@ -94,6 +93,9 @@ namespace Controller {
             this.winner.text = winner;
             gameOverPanel.SetActive(true);
             running = false;
+        }
+
+        public void userLeft(string nickname) {
         }
 
         public void userReadyUp(string nickname) {

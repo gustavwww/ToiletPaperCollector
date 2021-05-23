@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Controller.CommandHandlers;
 using JetBrains.Annotations;
 using Model;
 using Services;
@@ -11,11 +12,12 @@ namespace Controller {
     
     public class ServerController : MonoBehaviour, TCPListener {
 
-        public DuelCommandHandler duelCommandHandler;
-        
         // 188.166.99.144
         private static readonly string HOST = "localhost";
         private static readonly int PORT = 26000;
+        
+        public DuelCommandHandler duelCommandHandler;
+        public ServerErrorHandler serverErrorHandler;
 
         private TCPClient tcpClient;
         private IServerProtocol protocol;
@@ -81,7 +83,7 @@ namespace Controller {
                 
                 case "error":
                     string err = cmd.getArgs()[0];
-                    informListenersError(err);
+                    serverErrorHandler.handleServerError(err);
                     break;
             }
         }
@@ -92,7 +94,7 @@ namespace Controller {
             Debug.Log("Error occurred: " + e.Message);
             connected = false;
             loggedIn = false;
-            informListenersException(e);
+            serverErrorHandler.handleServerException(e);
         }
 
         private void informListenersConnected() {
@@ -107,22 +109,6 @@ namespace Controller {
             UnityMainThread.instance.addJob(() => {
                 foreach (ServerControllerListener l in listeners) {
                     l.onLoggedIn(name, coins, amount, totalAmount);
-                }
-            });
-        }
-        
-        private void informListenersException(Exception e) {
-            UnityMainThread.instance.addJob(() => {
-                foreach (ServerControllerListener l in listeners) {
-                    l.onException(e);
-                }
-            });
-        }
-        
-        private void informListenersError(string message) {
-            UnityMainThread.instance.addJob(() => {
-                foreach (ServerControllerListener l in listeners) {
-                    l.onError(message);
                 }
             });
         }
