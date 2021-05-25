@@ -37,7 +37,7 @@ namespace View {
             destroying = true;
         }
 
-        public void levelUpdated(GameLevel level) {
+        public void levelUpdated(Level level) {
         }
     }
     

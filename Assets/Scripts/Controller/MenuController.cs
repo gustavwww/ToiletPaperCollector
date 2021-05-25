@@ -112,7 +112,7 @@ namespace Controller {
             totalScore.text = gameModel.getTotalBoxes().ToString();
         }
 
-        public void levelUpdated(GameLevel level) {
+        public void levelUpdated(Level level) {
         }
     }
 

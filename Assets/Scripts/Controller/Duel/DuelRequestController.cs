@@ -1,4 +1,5 @@
-﻿using Controller.CommandHandlers;
+﻿using System;
+using Controller.CommandHandlers;
 using Model;
 using TMPro;
 using UnityEngine;
@@ -6,9 +7,10 @@ using UnityEngine.UI;
 
 namespace Controller.Duel {
     
-    public class DuelRequestController : MonoBehaviour, DuelCommandListener {
+    public class DuelRequestController : MonoBehaviour, DuelCommandListener, ServerErrorListener {
 
         public DuelCommandHandler duelCommandHandler;
+        public ServerErrorHandler serverErrorHandler;
         public GameModel gameModel;
 
         public Canvas mainMenuCanvas;
@@ -25,11 +27,13 @@ namespace Controller.Duel {
         public GameObject indicator;
         public Text error;
         public GameObject sendButton;
+        public GameObject backBtn;
 
         private string requestName = "";
         
         private void Start() {
             duelCommandHandler.addListener(this);
+            serverErrorHandler.addListener(this);
         }
 
         public void sendPressed() {
@@ -40,6 +44,10 @@ namespace Controller.Duel {
             duelCommandHandler.sendRequest(requestName);
         }
 
+        public void backPressed() {
+            closeWindow();
+        }
+
         private void setWaitState(bool set) {
             indicator.SetActive(set);
             error.gameObject.SetActive(!set);
@@ -47,6 +55,7 @@ namespace Controller.Duel {
             waitingLabel.SetActive(set);
             nickInput.gameObject.SetActive(!set);
             sendButton.SetActive(!set);
+            backBtn.SetActive(!set);
         }
 
         private void joinDuel() {
@@ -101,6 +110,15 @@ namespace Controller.Duel {
 
         public void gameTimerChanged(int count) {
         }
+
+        public void onException(Exception e) {
+        }
+
+        public void onError(string message) {
+            setWaitState(false);
+            error.text = message;
+        }
+        
     }
     
 }

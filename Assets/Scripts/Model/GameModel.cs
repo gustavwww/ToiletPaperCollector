@@ -4,22 +4,15 @@ using UnityEngine;
 
 namespace Model {
     
-    public enum GameLevel {
-        LEVEL1 = 0,
-        LEVEL2 = 1
-    }
-    
     public class GameModel : MonoBehaviour {
 
-        private static readonly int MAX_BOX = 40;
-
-        private GameLevel level = GameLevel.LEVEL1;
+        private Level currentLevel = LevelData.LEVEL1;
 
         private string nickname;
         
         private int amount = 0;
-        private int boxes;
-        private int totalBoxes;
+        private int boxes = 0;
+        private int totalBoxes = 0;
         
         private readonly IList<ModelListener> listeners = new List<ModelListener>();
 
@@ -27,18 +20,13 @@ namespace Model {
             listeners.Add(listener);
         }
 
-        private void Start() {
-            boxes = 0;
-            totalBoxes = 0;
-        }
-        
         private void informObserversBoxFull() {
             foreach (ModelListener listener in listeners) {
                 listener.boxFull();
             }
         }
         
-        private void informObserversLevelUpdated(GameLevel newLevel) {
+        private void informObserversLevelUpdated(Level newLevel) {
             foreach (ModelListener listener in listeners) {
                 listener.levelUpdated(newLevel);
             }
@@ -46,21 +34,36 @@ namespace Model {
 
         public void incrementAmount() {
             amount++;
-            if (amount >= MAX_BOX) {
+            if (amount >= currentLevel.getCapacity()) {
 
                 amount = 0;
-                boxes++;
-                totalBoxes++;
+                boxes += currentLevel.getBoxIncrement();
+                totalBoxes += currentLevel.getBoxIncrement();
                 informObserversBoxFull();
+                checkGameLevel();
             }
 
         }
-
-        private void checkGameLevel() {
+        
+        public void setAmount(int amount, int totalAmount) {
+            boxes = amount;
+            totalBoxes = totalAmount;
+            checkGameLevel();
         }
 
-        public GameLevel getLevel() {
-            return level;
+        public void setNickName(string nickname) {
+            this.nickname = nickname;
+        }
+
+        private void checkGameLevel() {
+            if (boxes >= 4 && currentLevel.getId() == 0) {
+                currentLevel = LevelData.LEVEL2;
+                informObserversLevelUpdated(currentLevel);
+            }
+        }
+
+        public Level getLevel() {
+            return currentLevel;
         }
 
         public string getNickName() {
@@ -73,15 +76,6 @@ namespace Model {
 
         public int getTotalBoxes() {
             return totalBoxes;
-        }
-        
-        public void setAmount(int amount, int totalAmount) {
-            this.boxes = amount;
-            this.totalBoxes = totalAmount;
-        }
-
-        public void setNickName(string nickname) {
-            this.nickname = nickname;
         }
 
     }

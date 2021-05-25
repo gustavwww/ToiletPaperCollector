@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using Controller.CommandHandlers;
 using JetBrains.Annotations;
-using Model;
 using Services;
 using Services.Protocol;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Controller {
     
@@ -83,7 +81,9 @@ namespace Controller {
                 
                 case "error":
                     string err = cmd.getArgs()[0];
-                    serverErrorHandler.handleServerError(err);
+                    UnityMainThread.instance.addJob(() => {
+                        serverErrorHandler.handleServerError(err);
+                    });
                     break;
             }
         }
@@ -94,7 +94,9 @@ namespace Controller {
             Debug.Log("Error occurred: " + e.Message);
             connected = false;
             loggedIn = false;
-            serverErrorHandler.handleServerException(e);
+            UnityMainThread.instance.addJob(() => {
+                serverErrorHandler.handleServerException(e);
+            });
         }
 
         private void informListenersConnected() {
