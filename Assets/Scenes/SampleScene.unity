@@ -432,8 +432,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: View.LeaderBoardView, Assembly-CSharp
+      - m_Target: {fileID: 1132966727}
+        m_TargetAssemblyTypeName: Controller.LeaderBoardPanelController, Assembly-CSharp
         m_MethodName: totalPressed
         m_Mode: 1
         m_Arguments:
@@ -15490,8 +15490,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: View.LeaderBoardView, Assembly-CSharp
+      - m_Target: {fileID: 1132966727}
+        m_TargetAssemblyTypeName: Controller.LeaderBoardPanelController, Assembly-CSharp
         m_MethodName: weeklyPressed
         m_Mode: 1
         m_Arguments:
