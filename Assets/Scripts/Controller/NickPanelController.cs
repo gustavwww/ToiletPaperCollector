@@ -46,6 +46,7 @@ namespace Controller {
 
         public void onError(string message) {
             error.gameObject.SetActive(true);
+            indicator.SetActive(false);
             error.text = message;
         }
     }

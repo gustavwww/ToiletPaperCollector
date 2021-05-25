@@ -59,15 +59,14 @@ namespace Controller.Duel {
         }
 
         private void joinDuel() {
-            duelController.instantiateDuel(gameModel.getNickName(), requestName);
-            mainMenuCanvas.gameObject.SetActive(false);
-            duelCanvas.gameObject.SetActive(true);
-            duelCamera.gameObject.SetActive(true);
+            duelController.joinDuel(gameModel.getNickName(), requestName);
             closeWindow();
         }
 
         private void closeWindow() {
             setWaitState(false);
+            error.gameObject.SetActive(false);
+            
             gameObject.SetActive(false);
             mainMenuPanel.SetActive(true);
         }
@@ -80,9 +79,7 @@ namespace Controller.Duel {
                 error.text = "Player declined.";
                 setWaitState(false);
             } else {
-                setWaitState(false);
-                error.gameObject.SetActive(false);
-                
+
                 joinDuel();
             }
         }

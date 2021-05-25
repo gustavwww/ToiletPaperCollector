@@ -11,6 +11,7 @@ namespace Controller.Duel {
 
         public Canvas mainMenuCanvas;
         public Camera duelCamera;
+        public Canvas duelCanvas;
         
         public TMP_Text name;
         public TMP_Text nameRdy;
@@ -31,9 +32,6 @@ namespace Controller.Duel {
         public SkinManager skinManager;
         public GameObject box;
         public GameObject opponentBox;
-        
-        private int amount;
-        private int opponentAmount;
 
         private bool running = false;
         
@@ -54,27 +52,48 @@ namespace Controller.Duel {
 
         public void backPressed() {
             if (running) { return; }
-            duelCamera.gameObject.SetActive(false);
-            mainMenuCanvas.gameObject.SetActive(true);
+            display(false);
+        }
+
+        public void joinDuel(string name, string opponentName) {
+            this.name.text = name.ToLower();
+            nameRdy.text = name.ToLower();
+            this.opponentName.text = opponentName.ToLower();
+            opponentNameRdy.text = opponentName.ToLower();
+            display(true);
+        }
+
+        private void resetWindow() {
+            running = false;
+            score.text = "0";
+            opponentScore.text = "0";
+            gameTimer.text = "15 s";
+            winner.text = "NAN";
+            setReady(false);
+            setOpponentReady(false);
+            
             rdyBtn.SetActive(true);
+            startTimer.gameObject.SetActive(false);
+            gameTimer.gameObject.SetActive(true);
             gameOverPanel.SetActive(false);
         }
 
-        public void instantiateDuel(string name, string opponentName) {
-            amount = 0;
-            opponentAmount = 0;
-            
-            this.name.text = name;
-            nameRdy.text = name;
-            this.opponentName.text = opponentName;
-            opponentNameRdy.text = opponentName;
-            winner.text = "";
-            refreshScore();
+        private void display(bool display) {
+            if (display)
+                resetWindow();
+            mainMenuCanvas.gameObject.SetActive(!display);
+            duelCamera.gameObject.SetActive(display);
+            duelCanvas.gameObject.SetActive(display);
         }
 
-        private void refreshScore() {
-            score.text = amount.ToString();
-            opponentScore.text = opponentAmount.ToString();
+        private void setReady(bool rdy) {
+            name.gameObject.SetActive(!rdy);
+            nameRdy.gameObject.SetActive(rdy);
+        }
+        
+        private void setOpponentReady(bool rdy) {
+            opponentName.gameObject.SetActive(!rdy);
+            opponentNameRdy.gameObject.SetActive(rdy);
         }
 
         public void gotRequest(string from) {
@@ -110,12 +129,12 @@ namespace Controller.Duel {
 
         public void countSent(string sender, int count) {
             if (sender.Equals(opponentName.text)) {
-                opponentAmount++;
+                opponentScore.text = count.ToString();
                 skinManager.spawnBody(opponentBox);
-            } else {
-                amount++;
+                return;
             }
-            refreshScore();
+
+            score.text = count.ToString();
         }
 
         public void startTimerChanged(int count) {
@@ -124,7 +143,7 @@ namespace Controller.Duel {
         }
 
         public void gameTimerChanged(int count) {
-            gameTimer.text = count.ToString();
+            gameTimer.text = count + " s";
         }
     }
     

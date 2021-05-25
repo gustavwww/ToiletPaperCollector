@@ -57,7 +57,7 @@ namespace Controller {
 
         public void messageReceived(string msg) {
             Command cmd = protocol.parseMessage(msg);
-            
+            Debug.Log("SERVER MESSAGE: " + msg);
             switch (cmd.getCmd()) {
                 case "connected":
                     connected = true;

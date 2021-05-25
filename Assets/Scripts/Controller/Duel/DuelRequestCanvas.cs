@@ -1,3 +1,4 @@
+using System;
 using Controller.CommandHandlers;
 using Model;
 using TMPro;
@@ -10,38 +11,41 @@ namespace Controller.Duel {
         public DuelController duelController;
         public GameModel gameModel;
 
-        public Canvas mainMenuCanvas;
-        public Canvas duelCanvas;
-        public Camera duelCamera;
-    
+        private CanvasGroup duelCanvas;
+
         public TMP_Text sender;
 
+        private void Start() {
+            duelCanvas = gameObject.GetComponent<CanvasGroup>();
+            duelCommandHandler.addListener(this);
+        }
+        
         public void acceptPressed() {
-            joinDuel();
+            duelCommandHandler.acceptRequest();
+            duelController.joinDuel(gameModel.getNickName(), sender.text);
+            showRequestCanvas(false);
         }
 
         public void declinePressed() {
-            gameObject.SetActive(false);
+            duelCommandHandler.rejectRequest();
+            showRequestCanvas(false);
         }
 
-        private void joinDuel() {
-            duelController.instantiateDuel(gameModel.getNickName(), sender.text);
-            gameObject.SetActive(false);
-            mainMenuCanvas.gameObject.SetActive(false);
-            duelCanvas.gameObject.SetActive(true);
-            duelCamera.gameObject.SetActive(true);
-        }
-
-        private void Start() {
-            duelCommandHandler.addListener(this);
+        private void showRequestCanvas(bool show) {
+            duelCanvas.alpha = show ? 1 : 0;
+            duelCanvas.interactable = show;
+            duelCanvas.blocksRaycasts = show;
         }
     
         public void gotRequest(string from) {
             sender.text = from;
-            gameObject.SetActive(true);
+            showRequestCanvas(true);
         }
 
         public void gotResponse(DuelResponseType type) {
+            if (type == DuelResponseType.CANCELLED) {
+                showRequestCanvas(false);
+            }
         }
 
         public void duelStarted() {
