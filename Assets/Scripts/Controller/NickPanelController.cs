@@ -1,5 +1,6 @@
 ﻿using System;
 using Controller.CommandHandlers;
+using Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ namespace Controller {
 
         public ServerController serverController;
         public ServerErrorHandler serverErrorHandler;
-        
+
         public TMP_InputField input;
         public GameObject indicator;
         public Text error;
@@ -35,7 +36,7 @@ namespace Controller {
         public void onConnected() {
         }
 
-        public void onLoggedIn(string name, int coins, int amount, int totalAmount) {
+        public void onLoggedIn(string name, int coins, int weeklyAmount, int amount) {
             mainMenuPanel.SetActive(true);
             gameObject.SetActive(false);
             indicator.SetActive(false);

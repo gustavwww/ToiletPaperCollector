@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using View;
+using View.skin;
 
 namespace Controller.Duel {
     
@@ -81,7 +82,6 @@ namespace Controller.Duel {
         private void display(bool display) {
             if (display)
                 resetWindow();
-            mainMenuCanvas.gameObject.SetActive(!display);
             duelCamera.gameObject.SetActive(display);
             duelCanvas.gameObject.SetActive(display);
         }

@@ -22,7 +22,7 @@ namespace Controller.Duel {
         
         public void acceptPressed() {
             duelCommandHandler.acceptRequest();
-            duelController.joinDuel(gameModel.getNickName(), sender.text);
+            duelController.joinDuel(gameModel.getUser().getNickname(), sender.text);
             showRequestCanvas(false);
         }
 

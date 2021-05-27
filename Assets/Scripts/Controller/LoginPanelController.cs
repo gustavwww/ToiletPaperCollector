@@ -38,9 +38,8 @@ namespace Controller {
             serverController.login(SystemInfo.deviceUniqueIdentifier, null);
         }
 
-        public void onLoggedIn(string name, int coins, int amount, int totalAmount) {
-            gameModel.setNickName(name);
-            gameModel.setAmount(amount, totalAmount);
+        public void onLoggedIn(string name, int coins, int weeklyAmount, int amount) {
+            gameModel.setUser(new User(name, coins, amount, weeklyAmount));
             gameObject.SetActive(false);
             mainMenuPanel.SetActive(true);
         }

@@ -38,9 +38,9 @@ namespace Controller {
             
             gameModel.addListener(this);
 
-            name.text = gameModel.getNickName();
-            weeklyScore.text = gameModel.getBoxes().ToString();
-            totalScore.text = gameModel.getBoxes().ToString();
+            name.text = gameModel.getUser().getNickname();
+            weeklyScore.text = gameModel.getUser().getWeeklyAmount().ToString();
+            totalScore.text = gameModel.getUser().getAmount().ToString();
         }
 
         public void playPressed() {
@@ -108,8 +108,8 @@ namespace Controller {
         }
 
         public void boxFull() {
-            weeklyScore.text = gameModel.getBoxes().ToString();
-            totalScore.text = gameModel.getTotalBoxes().ToString();
+            weeklyScore.text = gameModel.getUser().getWeeklyAmount().ToString();
+            totalScore.text = gameModel.getUser().getAmount().ToString();
         }
 
         public void levelUpdated(Level level) {

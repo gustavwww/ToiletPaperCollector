@@ -67,10 +67,10 @@ namespace Controller {
                 case "logged":
                     string name = cmd.getArgs()[0];
                     int coins = int.Parse(cmd.getArgs()[1]);
-                    int totalAmount = int.Parse(cmd.getArgs()[2]);
-                    int amount = int.Parse(cmd.getArgs()[3]);
+                    int amount = int.Parse(cmd.getArgs()[2]);
+                    int weeklyAmount = int.Parse(cmd.getArgs()[3]);
                     loggedIn = true;
-                    informListenersLogged(name, coins, amount, totalAmount);
+                    informListenersLogged(name, coins, weeklyAmount, amount);
                     break;
 
                 case "duel":
@@ -107,10 +107,10 @@ namespace Controller {
             });
         }
         
-        private void informListenersLogged(string name, int coins, int amount, int totalAmount) {
+        private void informListenersLogged(string name, int coins, int weeklyAmount, int amount) {
             UnityMainThread.instance.addJob(() => {
                 foreach (ServerControllerListener l in listeners) {
-                    l.onLoggedIn(name, coins, amount, totalAmount);
+                    l.onLoggedIn(name, coins, weeklyAmount, amount);
                 }
             });
         }

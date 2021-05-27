@@ -4,6 +4,7 @@ using Model;
 using TMPro;
 using UnityEngine;
 using View;
+using View.skin;
 
 namespace Controller {
     
@@ -22,7 +23,7 @@ namespace Controller {
 
         void Start() {
             gameModel.addListener(this);
-            score.text = gameModel.getBoxes().ToString();
+            score.text = gameModel.getUser().getWeeklyAmount().ToString();
             updateLevelTags(gameModel.getLevel());
         }
         
@@ -52,7 +53,7 @@ namespace Controller {
         
         public void boxFull() {
             serverController.sendTCP("count");
-            score.text = gameModel.getBoxes().ToString();
+            score.text = gameModel.getUser().getWeeklyAmount().ToString();
         }
 
         public void levelUpdated(Level level) {

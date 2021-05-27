@@ -14,8 +14,9 @@ namespace View.Camera {
         private void Start() {
             gameModel.addListener(this);
             animator = gameObject.GetComponent<Animator>();
+            checkCameraPosition(gameModel.getLevel());
         }
-
+        
         private void checkCameraPosition(Level level) {
             if (currentPos == level) {
                 return;

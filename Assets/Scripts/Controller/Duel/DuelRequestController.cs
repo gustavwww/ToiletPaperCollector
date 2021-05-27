@@ -12,13 +12,10 @@ namespace Controller.Duel {
         public DuelCommandHandler duelCommandHandler;
         public ServerErrorHandler serverErrorHandler;
         public GameModel gameModel;
-
-        public Canvas mainMenuCanvas;
+        
         public GameObject mainMenuPanel;
 
         public DuelController duelController;
-        public Canvas duelCanvas;
-        public Camera duelCamera;
         
         public GameObject requestLabel;
         public GameObject waitingLabel;
@@ -59,7 +56,7 @@ namespace Controller.Duel {
         }
 
         private void joinDuel() {
-            duelController.joinDuel(gameModel.getNickName(), requestName);
+            duelController.joinDuel(gameModel.getUser().getNickname(), requestName);
             closeWindow();
         }
 

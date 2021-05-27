@@ -1,16 +1,20 @@
 ﻿using System;
+using Model;
 using Services.Http;
 using UnityEngine;
 using View;
 
 namespace Controller {
     public class LeaderBoardPanelController : MonoBehaviour {
+
+        public GameModel gameModel;
         
         public GameObject totalContent;
         public GameObject weeklyContent;
         public CanvasGroup totalScroll;
         public CanvasGroup weeklyScroll;
         public GameObject listItem;
+        public GameObject meListItem;
 
         public GameObject mainMenuPanel;
 
@@ -58,6 +62,10 @@ namespace Controller {
                 var user = result.users[i];
                 
                 GameObject lItem = Instantiate(listItem);
+                if (user.nickname.Equals(gameModel.getUser().getNickname())) {
+                    lItem = Instantiate(meListItem);
+                }
+                
                 LeaderBoardEntry entry = lItem.GetComponent<LeaderBoardEntry>();
                 entry.nickname.text = user.nickname;
                 entry.amount.text = user.amount.ToString();
@@ -76,6 +84,10 @@ namespace Controller {
                 var user = result.users[i];
                 
                 GameObject lItem = Instantiate(listItem);
+                if (user.nickname.Equals(gameModel.getUser().getNickname())) {
+                    lItem = Instantiate(meListItem);
+                }
+                
                 LeaderBoardEntry entry = lItem.GetComponent<LeaderBoardEntry>();
                 entry.nickname.text = user.nickname;
                 entry.amount.text = user.weeklyAmount.ToString();

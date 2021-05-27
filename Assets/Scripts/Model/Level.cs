@@ -6,14 +6,14 @@
         private readonly int requirement;
         private readonly int capacity;
         private readonly int spawnAmount;
-        private readonly int boxIncrement;
+        private readonly int amountIncrement;
 
-        public Level(int id, int requirement, int capacity, int spawnAmount, int boxIncrement) {
+        public Level(int id, int requirement, int capacity, int spawnAmount, int amountIncrement) {
             this.id = id;
             this.requirement = requirement;
             this.capacity = capacity;
             this.spawnAmount = spawnAmount;
-            this.boxIncrement = boxIncrement;
+            this.amountIncrement = amountIncrement;
         }
 
         public int getId() {
@@ -33,8 +33,8 @@
             return spawnAmount;
         }
 
-        public int getBoxIncrement() {
-            return boxIncrement;
+        public int getAmountIncrement() {
+            return amountIncrement;
         }
 
     }

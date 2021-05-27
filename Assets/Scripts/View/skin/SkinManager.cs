@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace View {
+namespace View.skin {
     public class SkinManager : MonoBehaviour {
 
-        public List<GameObject> skins;
-        private GameObject selectedSkin;
+        public List<Skin> skins;
+        private Skin selectedSkin;
 
         private Transform reference;
 
@@ -17,7 +16,7 @@ namespace View {
         }
 
         public void spawnBody(GameObject box) {
-            GameObject o = Instantiate(selectedSkin, getRandomSpawnPos(box), reference.rotation, reference);
+            Skin o = Instantiate(selectedSkin, getRandomSpawnPos(box), reference.rotation, reference);
 
             // Add rotation
             Rigidbody rgBody = o.GetComponent<Rigidbody>();
@@ -37,7 +36,7 @@ namespace View {
             return origin + randomRange;
         }
         
-        public GameObject getSkin() {
+        public Skin getSkin() {
             return selectedSkin;
         }
 
